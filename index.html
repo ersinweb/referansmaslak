@@ -6,7 +6,6 @@
     <title>Referans Maslak Real Estate</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* FONT EMBED */
         @font-face {
             font-family: 'QarantaBold';
             src: local('Qaranta Bold'), local('Qaranta-Bold'),
@@ -39,7 +38,6 @@
             background-color: var(--white);
             color: var(--dark-gray);
             line-height: 1.6;
-            overflow-x: hidden;
         }
         
         .top-bar {
@@ -203,13 +201,6 @@
         
         .language-option.active i {
             visibility: visible;
-        }
-        
-        header {
-            position: relative;
-            height: 100vh;
-            background: url('Anafoto.jpeg') no-repeat center center;
-            background-size: cover;
         }
         
         .gallery {
@@ -396,8 +387,6 @@
         </div>
     </div>
     
-    <header></header>
-    
     <div class="gallery" id="galleryContainer"></div>
     
     <footer>
@@ -427,7 +416,6 @@
     </footer>
 
     <script>
-        // Basic code protection
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
@@ -441,7 +429,6 @@
             }
         });
 
-        // Language switcher functionality
         const languageToggle = document.getElementById('languageToggle');
         const languageDropdown = document.getElementById('languageDropdown');
         const languageOptions = document.querySelectorAll('.language-option');
@@ -489,7 +476,6 @@
             console.log('Changing language to:', lang);
         }
 
-        // GÜNCELLENMİŞ GALERİ OLUŞTURMA FONKSİYONU
         function generateGallery() {
             const gallery = document.getElementById('galleryContainer');
             gallery.innerHTML = '';
@@ -498,11 +484,9 @@
             const extensions = ['jpeg', 'jpg', 'jfif'];
             const imagePromises = [];
             
-            // 1'den 50'ye kadar tüm resimler için
             for (let num = 1; num <= imageCount; num++) {
                 const imgDiv = document.createElement('div');
                 
-                // Rastgele boyut sınıfı ekleme
                 const randomSize = Math.random();
                 if (randomSize < 0.2) {
                     imgDiv.classList.add('img-large');
@@ -512,7 +496,6 @@
                     imgDiv.classList.add('img-wide');
                 }
 
-                // Uzantıları deneme sırası
                 const tryExtension = async (index) => {
                     if (index >= extensions.length) return null;
                     
@@ -538,25 +521,20 @@
                 );
             }
 
-            // Tüm resimler yüklendikten sonra
             Promise.all(imagePromises).then(images => {
                 const validImages = images.filter(img => img !== null);
                 
-                // Karıştırma işlemi
                 for (let i = validImages.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [validImages[i], validImages[j]] = [validImages[j], validImages[i]];
                 }
                 
-                // Galeriye ekleme
                 validImages.forEach(img => gallery.appendChild(img));
             });
         }
 
-        // Sayfa yüklendiğinde galeriyi oluştur
         document.addEventListener('DOMContentLoaded', generateGallery);
         
-        // Yenileme durumunda galeriyi tekrar oluştur
         window.addEventListener('beforeunload', function() {
             sessionStorage.setItem('galleryRefresh', Date.now());
         });
