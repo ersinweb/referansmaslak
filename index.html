@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referans Maslak Real Estate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* FONT EMBED */
+        @font-face {
+            font-family: 'QarantaBold';
+            src: local('Qaranta Bold'), local('Qaranta-Bold'),
+                 url('QarantaBold.woff2') format('woff2'),
+                 url('QarantaBold.woff') format('woff'),
+                 url('QarantaBold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary-red: #e74c3c;
+            --primary-blue: #2c3e50;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --sahibinden-yellow: #FFD301;
+            --sahibinden-black: #000000;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .top-bar {
+            background-color: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 80px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .company-name {
+            display: flex;
+            flex-direction: column;
+            margin: 0 15px;
+        }
+        
+        .company-name-main {
+            color: var(--primary-red);
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-family: 'QarantaBold', Arial, sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .company-name-sub {
+            color: var(--primary-blue);
+            font-size: clamp(14px, 3vw, 18px);
+            margin-top: 5px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+            min-width: 100px;
+            height: 38px;
+            text-decoration: none;
+        }
+        
+        .action-button i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+        
+        .action-button:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+        }
+        
+        .language-switcher {
+            position: relative;
+            margin-left: 10px;
+        }
+        
+        .language-button {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .language-button:hover {
+            border-color: var(--primary-red);
+        }
+        
+        .language-button i {
+            margin-left: 6px;
+            font-size: 12px;
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 8px 0;
+            min-width: 110px;
+            display: none;
+            z-index: 10;
+        }
+        
+        .language-dropdown.show {
+            display: block;
+        }
+        
+        .language-option {
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .language-option:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-red);
+        }
+        
+        .language-option.active {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .language-option i {
+            margin-right: 6px;
+            font-size: 12px;
+            visibility: hidden;
+        }
+        
+        .language-option.active i {
+            visibility: visible;
+        }
+        
+        header {
+            position: relative;
+            height: 100vh;
+            background: url('Anafoto.jpeg') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 200px;
+            gap: 10px;
+            padding: 15px;
+        }
+        
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.05);
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .img-wide {
+            grid-column: span 2;
+        }
+        
+        .img-tall {
+            grid-row: span 2;
+        }
+        
+        .img-large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .social-icon {
+            color: var(--white);
+            font-size: 28px;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary-red);
+        }
+        
+        .sahibinden-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .sahibinden-logo {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--sahibinden-yellow);
+            color: var(--sahibinden-black);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .sahibinden-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sahibinden-logo i {
+            margin-right: 6px;
+            color: var(--sahibinden-black);
+        }
+        
+        .contact-info {
+            margin: 20px 0;
+        }
+        
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .company-name {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+            
+            .action-buttons {
+                flex-grow: 1;
+                justify-content: flex-start;
+            }
+            
+            .language-switcher {
+                margin-left: auto;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-auto-rows: 150px;
+                gap: 8px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="top-bar">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="Firmalogo.jpg" alt="Referans Maslak Logo" class="logo">
+                <div class="company-name">
+                    <div class="company-name-main">REFERANS MASLAK</div>
+                    <div class="company-name-sub">Real Estate</div>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="action-buttons">
+                    <a href="tel:+905346270735" class="action-button" id="callButton">
+                        <i class="fas fa-phone-alt"></i> <span class="call-text">ARA</span>
+                    </a>
+                    <a href="https://maps.app.goo.gl/JvEdP2CgWucA9CLR9?g_st=aw" target="_blank" class="action-button" id="directionButton">
+                        <i class="fas fa-map-marked-alt"></i> <span class="direction-text">KONUM</span>
+                    </a>
+                </div>
+                
+                <div class="language-switcher">
+                    <div class="language-button" id="languageToggle">
+                        TR <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option active" data-lang="tr">
+                            <i class="fas fa-check"></i> Türkçe
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <i class="fas fa-check"></i> English
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+        <!-- Hero text removed -->
+    </header>
+    
+    <div class="gallery" id="galleryContainer">
+        <!-- Images will be added by JavaScript -->
+    </div>
+    
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/referansmaslak.ersinsavci?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ersin-savci-091b9053/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://referansmaslak.sahibinden.com/" target="_blank" class="sahibinden-link">
+                <span class="sahibinden-logo">
+                    <i class="fas fa-home"></i> sahibinden.com
+                </span>
+            </a>
+        </div>
+        
+        <div class="contact-info">
+            <h3>Referans Maslak Real Estate</h3>
+            <p>Ağaoğlu Maslak 1453 Projesi T4 b Blok No:62 Maslak/Sarıyer/İstanbul</p>
+            <p>info@referansmaslak.com</p>
+        </div>
+        
+        <div class="copyright">
+            © <script>document.write(new Date().getFullYear())</script> Referans Maslak. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+    <script>
+        // Basic code protection
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 117)) { // Ctrl+U
+                e.preventDefault();
+            }
+            if (e.keyCode === 123) { // F12
+                e.preventDefault();
+            }
+        });
+
+        // Language switcher functionality
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const languageOptions = document.querySelectorAll('.language-option');
+        const callButtonText = document.querySelector('.call-text');
+        const directionButtonText = document.querySelector('.direction-text');
+        
+        // Current language
+        let currentLanguage = 'tr';
+        
+        // Toggle dropdown
+        languageToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            languageDropdown.classList.remove('show');
+        });
+        
+        // Language selection
+        languageOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                currentLanguage = lang;
+                
+                // Update active language
+                languageOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update button text
+                languageToggle.innerHTML = lang === 'tr' ? 'TR <i class="fas fa-chevron-down"></i>' : 'EN <i class="fas fa-chevron-down"></i>';
+                
+                // Close dropdown
+                languageDropdown.classList.remove('show');
+                
+                // Update button texts
+                updateButtonTexts(lang);
+                
+                // Here you would implement actual language change for all content
+                changeLanguage(lang);
+            });
+        });
+        
+        // Function to update button texts based on language
+        function updateButtonTexts(lang) {
+            if (lang === 'tr') {
+                callButtonText.textContent = 'ARA';
+                directionButtonText.textContent = 'KONUM';
+            } else {
+                callButtonText.textContent = 'CALL';
+                directionButtonText.textContent = 'DIRECTIONS';
+            }
+        }
+        
+        // Function to change language (placeholder)
+        function changeLanguage(lang) {
+            console.log('Changing language to:', lang);
+        }
+
+        // Generate random gallery layout
+        function generateGallery() {
+            const gallery = document.getElementById('galleryContainer');
+            gallery.innerHTML = ''; // Clear existing images
+            
+            const imageCount = 50; // Gorsel (1) to Gorsel (50)
+            const extensions = ['jpeg', 'jpg', 'jfif'];
+            
+            // Create array of image numbers (1 to 50)
+            let imageNumbers = Array.from({length: imageCount}, (_, i) => i + 1);
+            
+            // Shuffle the array randomly
+            for (let i = imageNumbers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [imageNumbers[i], imageNumbers[j]] = [imageNumbers[j], imageNumbers[i]];
+            }
+            
+            // Create and append images with random sizes
+            imageNumbers.forEach(num => {
+                const img = document.createElement('img');
+                
+                // Try different extensions until one works
+                const tryExtensions = (extIndex) => {
+                    if (extIndex >= extensions.length) return;
+                    
+                    const ext = extensions[extIndex];
+                    const imgName = `Gorsel (${num}).${ext}`;
+                    
+                    img.onerror = () => tryExtensions(extIndex + 1);
+                    img.src = imgName;
+                    img.alt = `Property Image ${num}`;
+                    
+                    // Randomly assign size classes
+                    const randomSize = Math.random();
+                    if (randomSize < 0.2) {
+                        img.classList.add('img-large');
+                    } else if (randomSize < 0.4) {
+                        img.classList.add('img-tall');
+                    } else if (randomSize < 0.6) {
+                        img.classList.add('img-wide');
+                    }
+                    
+                    gallery.appendChild(img);
+                };
+                
+                tryExtensions(0);
+            });
+        }
+
+        // Generate gallery on page load
+        document.addEventListener('DOMContentLoaded', generateGallery);
+        
+        // Regenerate gallery on page refresh
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('galleryRefresh', Date.now());
+        });
+        
+        // Check if we need to regenerate on load
+        if (sessionStorage.getItem('galleryRefresh')) {
+            generateGallery();
+            sessionStorage.removeItem('galleryRefresh');
+        }
+    </script>
+</body>
+</html>
