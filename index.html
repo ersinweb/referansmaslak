@@ -359,10 +359,6 @@
     </style>
 </head>
 <body>
-    <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
     <div class="top-bar">
         <div class="header-content">
             <div class="logo-container">
@@ -400,13 +396,9 @@
         </div>
     </div>
     
-    <header>
-        <!-- Hero text removed -->
-    </header>
+    <header></header>
     
-    <div class="gallery" id="galleryContainer">
-        <!-- Images will be added by JavaScript -->
-    </div>
+    <div class="gallery" id="galleryContainer"></div>
     
     <footer>
         <div class="social-links">
@@ -441,10 +433,10 @@
         });
         
         document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 117)) { // Ctrl+U
+            if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 117)) {
                 e.preventDefault();
             }
-            if (e.keyCode === 123) { // F12
+            if (e.keyCode === 123) {
                 e.preventDefault();
             }
         });
@@ -456,45 +448,33 @@
         const callButtonText = document.querySelector('.call-text');
         const directionButtonText = document.querySelector('.direction-text');
         
-        // Current language
         let currentLanguage = 'tr';
         
-        // Toggle dropdown
         languageToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             languageDropdown.classList.toggle('show');
         });
         
-        // Close dropdown when clicking outside
         document.addEventListener('click', function() {
             languageDropdown.classList.remove('show');
         });
         
-        // Language selection
         languageOptions.forEach(option => {
             option.addEventListener('click', function() {
                 const lang = this.getAttribute('data-lang');
                 currentLanguage = lang;
                 
-                // Update active language
                 languageOptions.forEach(opt => opt.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Update button text
                 languageToggle.innerHTML = lang === 'tr' ? 'TR <i class="fas fa-chevron-down"></i>' : 'EN <i class="fas fa-chevron-down"></i>';
                 
-                // Close dropdown
                 languageDropdown.classList.remove('show');
-                
-                // Update button texts
                 updateButtonTexts(lang);
-                
-                // Here you would implement actual language change for all content
                 changeLanguage(lang);
             });
         });
         
-        // Function to update button texts based on language
         function updateButtonTexts(lang) {
             if (lang === 'tr') {
                 callButtonText.textContent = 'ARA';
@@ -505,69 +485,82 @@
             }
         }
         
-        // Function to change language (placeholder)
         function changeLanguage(lang) {
             console.log('Changing language to:', lang);
         }
 
-        // Generate random gallery layout
+        // GÜNCELLENMİŞ GALERİ OLUŞTURMA FONKSİYONU
         function generateGallery() {
             const gallery = document.getElementById('galleryContainer');
-            gallery.innerHTML = ''; // Clear existing images
+            gallery.innerHTML = '';
             
-            const imageCount = 50; // Gorsel (1) to Gorsel (50)
+            const imageCount = 50;
             const extensions = ['jpeg', 'jpg', 'jfif'];
+            const imagePromises = [];
             
-            // Create array of image numbers (1 to 50)
-            let imageNumbers = Array.from({length: imageCount}, (_, i) => i + 1);
-            
-            // Shuffle the array randomly
-            for (let i = imageNumbers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [imageNumbers[i], imageNumbers[j]] = [imageNumbers[j], imageNumbers[i]];
-            }
-            
-            // Create and append images with random sizes
-            imageNumbers.forEach(num => {
-                const img = document.createElement('img');
+            // 1'den 50'ye kadar tüm resimler için
+            for (let num = 1; num <= imageCount; num++) {
+                const imgDiv = document.createElement('div');
                 
-                // Try different extensions until one works
-                const tryExtensions = (extIndex) => {
-                    if (extIndex >= extensions.length) return;
+                // Rastgele boyut sınıfı ekleme
+                const randomSize = Math.random();
+                if (randomSize < 0.2) {
+                    imgDiv.classList.add('img-large');
+                } else if (randomSize < 0.4) {
+                    imgDiv.classList.add('img-tall');
+                } else if (randomSize < 0.6) {
+                    imgDiv.classList.add('img-wide');
+                }
+
+                // Uzantıları deneme sırası
+                const tryExtension = async (index) => {
+                    if (index >= extensions.length) return null;
                     
-                    const ext = extensions[extIndex];
-                    const imgName = `Gorsel (${num}).${ext}`;
-                    
-                    img.onerror = () => tryExtensions(extIndex + 1);
-                    img.src = imgName;
+                    const ext = extensions[index];
+                    const img = new Image();
+                    img.src = `Gorsel (${num}).${ext}`;
                     img.alt = `Property Image ${num}`;
                     
-                    // Randomly assign size classes
-                    const randomSize = Math.random();
-                    if (randomSize < 0.2) {
-                        img.classList.add('img-large');
-                    } else if (randomSize < 0.4) {
-                        img.classList.add('img-tall');
-                    } else if (randomSize < 0.6) {
-                        img.classList.add('img-wide');
-                    }
-                    
-                    gallery.appendChild(img);
+                    return new Promise((resolve) => {
+                        img.onload = () => resolve(img);
+                        img.onerror = () => resolve(tryExtension(index + 1));
+                    });
                 };
+
+                imagePromises.push(
+                    tryExtension(0).then(img => {
+                        if (img) {
+                            imgDiv.appendChild(img);
+                            return imgDiv;
+                        }
+                        return null;
+                    })
+                );
+            }
+
+            // Tüm resimler yüklendikten sonra
+            Promise.all(imagePromises).then(images => {
+                const validImages = images.filter(img => img !== null);
                 
-                tryExtensions(0);
+                // Karıştırma işlemi
+                for (let i = validImages.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [validImages[i], validImages[j]] = [validImages[j], validImages[i]];
+                }
+                
+                // Galeriye ekleme
+                validImages.forEach(img => gallery.appendChild(img));
             });
         }
 
-        // Generate gallery on page load
+        // Sayfa yüklendiğinde galeriyi oluştur
         document.addEventListener('DOMContentLoaded', generateGallery);
         
-        // Regenerate gallery on page refresh
+        // Yenileme durumunda galeriyi tekrar oluştur
         window.addEventListener('beforeunload', function() {
             sessionStorage.setItem('galleryRefresh', Date.now());
         });
         
-        // Check if we need to regenerate on load
         if (sessionStorage.getItem('galleryRefresh')) {
             generateGallery();
             sessionStorage.removeItem('galleryRefresh');
