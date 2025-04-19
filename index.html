@@ -38,6 +38,7 @@
             background-color: var(--white);
             color: var(--dark-gray);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
         
         .top-bar {
@@ -59,6 +60,7 @@
         .logo-container {
             display: flex;
             align-items: center;
+            cursor: pointer;
         }
         
         .logo {
@@ -221,9 +223,19 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
         
-        .gallery img:hover {
-            transform: scale(1.05);
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
             z-index: 1;
+        }
+        
+        .gallery-item:hover img {
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         
@@ -346,13 +358,17 @@
                 gap: 8px;
                 padding: 10px;
             }
+            
+            .img-wide, .img-large {
+                grid-column: span 2;
+            }
         }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <div class="header-content">
-            <div class="logo-container">
+            <div class="logo-container" id="logoLink">
                 <img src="Firmalogo.jpg" alt="Referans Maslak Logo" class="logo">
                 <div class="company-name">
                     <div class="company-name-main">REFERANS MASLAK</div>
@@ -406,7 +422,7 @@
         
         <div class="contact-info">
             <h3>Referans Maslak Real Estate</h3>
-            <p>Ağaoğlu Maslak 1453 Projesi T4 b Blok No:62 Maslak/Sarıyer/İstanbul</p>
+            <p>Ağaoğlu Maslak 1453 Projesi T4b Blok No:62 Maslak/Sarıyer/İstanbul</p>
             <p>info@referansmaslak.com</p>
         </div>
         
@@ -416,133 +432,244 @@
     </footer>
 
     <script>
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 117)) {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right click and F12
+            document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
-            }
-            if (e.keyCode === 123) {
-                e.preventDefault();
-            }
-        });
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                    e.preventDefault();
+                }
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                }
+            });
 
-        const languageToggle = document.getElementById('languageToggle');
-        const languageDropdown = document.getElementById('languageDropdown');
-        const languageOptions = document.querySelectorAll('.language-option');
-        const callButtonText = document.querySelector('.call-text');
-        const directionButtonText = document.querySelector('.direction-text');
-        
-        let currentLanguage = 'tr';
-        
-        languageToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            languageDropdown.classList.toggle('show');
-        });
-        
-        document.addEventListener('click', function() {
-            languageDropdown.classList.remove('show');
-        });
-        
-        languageOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const lang = this.getAttribute('data-lang');
-                currentLanguage = lang;
+            // Scroll to top when logo is clicked
+            document.getElementById('logoLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Language switcher
+            const languageToggle = document.getElementById('languageToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const callButtonText = document.querySelector('.call-text');
+            const directionButtonText = document.querySelector('.direction-text');
+            
+            languageToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', function() {
+                languageDropdown.classList.remove('show');
+            });
+            
+            document.getElementById('languageDropdown').addEventListener('click', function(e) {
+                const option = e.target.closest('.language-option');
+                if (!option) return;
                 
-                languageOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
+                const lang = option.getAttribute('data-lang');
+                
+                document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
                 
                 languageToggle.innerHTML = lang === 'tr' ? 'TR <i class="fas fa-chevron-down"></i>' : 'EN <i class="fas fa-chevron-down"></i>';
-                
                 languageDropdown.classList.remove('show');
-                updateButtonTexts(lang);
-                changeLanguage(lang);
+                
+                if (lang === 'tr') {
+                    callButtonText.textContent = 'ARA';
+                    directionButtonText.textContent = 'KONUM';
+                } else {
+                    callButtonText.textContent = 'CALL';
+                    directionButtonText.textContent = 'DIRECTIONS';
+                }
             });
-        });
-        
-        function updateButtonTexts(lang) {
-            if (lang === 'tr') {
-                callButtonText.textContent = 'ARA';
-                directionButtonText.textContent = 'KONUM';
-            } else {
-                callButtonText.textContent = 'CALL';
-                directionButtonText.textContent = 'DIRECTIONS';
-            }
-        }
-        
-        function changeLanguage(lang) {
-            console.log('Changing language to:', lang);
-        }
 
-        function generateGallery() {
+            // Image gallery with perfect masonry layout
             const gallery = document.getElementById('galleryContainer');
-            gallery.innerHTML = '';
-            
             const imageCount = 50;
-            const extensions = ['jpeg', 'jpg', 'jfif'];
-            const imagePromises = [];
+            const extensions = ['jpg', 'jpeg', 'png', 'webp'];
             
-            for (let num = 1; num <= imageCount; num++) {
-                const imgDiv = document.createElement('div');
+            // Load all images at once
+            Promise.all(
+                Array.from({length: imageCount}, (_, i) => i + 1)
+                    .map(num => loadImage(num))
+            ).then(images => {
+                // Filter out failed loads
+                const loadedImages = images.filter(img => img !== null);
                 
-                const randomSize = Math.random();
-                if (randomSize < 0.2) {
-                    imgDiv.classList.add('img-large');
-                } else if (randomSize < 0.4) {
-                    imgDiv.classList.add('img-tall');
-                } else if (randomSize < 0.6) {
-                    imgDiv.classList.add('img-wide');
-                }
-
-                const tryExtension = async (index) => {
-                    if (index >= extensions.length) return null;
-                    
-                    const ext = extensions[index];
-                    const img = new Image();
-                    img.src = `Gorsel (${num}).${ext}`;
-                    img.alt = `Property Image ${num}`;
-                    
-                    return new Promise((resolve) => {
-                        img.onload = () => resolve(img);
-                        img.onerror = () => resolve(tryExtension(index + 1));
-                    });
-                };
-
-                imagePromises.push(
-                    tryExtension(0).then(img => {
-                        if (img) {
-                            imgDiv.appendChild(img);
-                            return imgDiv;
-                        }
-                        return null;
-                    })
-                );
-            }
-
-            Promise.all(imagePromises).then(images => {
-                const validImages = images.filter(img => img !== null);
+                // Classify images
+                const portraitImages = loadedImages.filter(img => img.isPortrait);
+                const landscapeImages = loadedImages.filter(img => !img.isPortrait);
                 
-                for (let i = validImages.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [validImages[i], validImages[j]] = [validImages[j], validImages[i]];
-                }
+                // Further classify landscape images
+                const wideImages = landscapeImages.filter(img => {
+                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
+                    return Math.abs(ratio - (16/9)) < 0.2; // 20% tolerance for 16:9
+                });
                 
-                validImages.forEach(img => gallery.appendChild(img));
+                const otherLandscape = landscapeImages.filter(img => {
+                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
+                    return Math.abs(ratio - (16/9)) >= 0.2;
+                });
+                
+                // Distribute other landscape images between large and small
+                const otherLandscapeCount = otherLandscape.length;
+                const largeCount = Math.floor(otherLandscapeCount / 2);
+                const smallCount = otherLandscapeCount - largeCount;
+                
+                // Shuffle arrays for random distribution
+                shuffleArray(portraitImages);
+                shuffleArray(wideImages);
+                shuffleArray(otherLandscape);
+                
+                // Create image elements with appropriate classes
+                const imageElements = [];
+                
+                // Add wide images
+                wideImages.forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-wide';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                
+                // Add large landscape images
+                otherLandscape.slice(0, largeCount).forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-large';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                
+                // Add small landscape images
+                otherLandscape.slice(largeCount).forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                
+                // Add portrait images
+                portraitImages.forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-tall';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                
+                // Shuffle all images for better distribution
+                shuffleArray(imageElements);
+                
+                // Add all images to gallery
+                imageElements.forEach(item => gallery.appendChild(item));
+                
+                // After all images are added, optimize layout to fill gaps
+                setTimeout(optimizeLayout, 100);
             });
-        }
-
-        document.addEventListener('DOMContentLoaded', generateGallery);
-        
-        window.addEventListener('beforeunload', function() {
-            sessionStorage.setItem('galleryRefresh', Date.now());
+            
+            // Function to optimize layout by filling gaps
+            function optimizeLayout() {
+                const items = Array.from(document.querySelectorAll('.gallery-item'));
+                const grid = document.querySelector('.gallery');
+                
+                // Get grid styles
+                const gridStyles = window.getComputedStyle(grid);
+                const columnWidth = parseInt(gridStyles.gridTemplateColumns.split(' ')[0]);
+                const rowHeight = parseInt(gridStyles.gridAutoRows);
+                const gap = parseInt(gridStyles.gap);
+                
+                // Track occupied grid cells
+                const occupied = new Set();
+                
+                // Place items and mark occupied cells
+                items.forEach(item => {
+                    const colSpan = item.classList.contains('img-wide') || item.classList.contains('img-large') ? 2 : 1;
+                    const rowSpan = item.classList.contains('img-tall') ? 2 : 
+                                    item.classList.contains('img-large') ? 2 : 1;
+                    
+                    // Find first available position
+                    let placed = false;
+                    for (let row = 0; !placed; row++) {
+                        for (let col = 0; col < Math.floor(grid.clientWidth / (columnWidth + gap)); col++) {
+                            // Check if this position can accommodate the item
+                            let canPlace = true;
+                            for (let r = row; r < row + rowSpan; r++) {
+                                for (let c = col; c < col + colSpan; c++) {
+                                    if (occupied.has(`${c},${r}`)) {
+                                        canPlace = false;
+                                        break;
+                                    }
+                                }
+                                if (!canPlace) break;
+                            }
+                            
+                            if (canPlace) {
+                                // Place the item here
+                                item.style.gridColumn = `${col + 1} / span ${colSpan}`;
+                                item.style.gridRow = `${row + 1} / span ${rowSpan}`;
+                                
+                                // Mark cells as occupied
+                                for (let r = row; r < row + rowSpan; r++) {
+                                    for (let c = col; c < col + colSpan; c++) {
+                                        occupied.add(`${c},${r}`);
+                                    }
+                                }
+                                
+                                placed = true;
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Function to load an image with extension fallback
+            function loadImage(number) {
+                return new Promise(resolve => {
+                    const img = new Image();
+                    let currentExt = 0;
+                    
+                    function tryExtension() {
+                        if (currentExt >= extensions.length) {
+                            console.log(`Image ${number} not found`);
+                            resolve(null);
+                            return;
+                        }
+                        
+                        const ext = extensions[currentExt++];
+                        img.src = `Gorsel (${number}).${ext}`;
+                        img.alt = `Referans Maslak Proje ${number}`;
+                    }
+                    
+                    img.onload = function() {
+                        resolve({
+                            img: img,
+                            isPortrait: img.naturalHeight > img.naturalWidth
+                        });
+                    };
+                    img.onerror = tryExtension;
+                    
+                    tryExtension();
+                });
+            }
+            
+            // Fisher-Yates shuffle algorithm
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
         });
-        
-        if (sessionStorage.getItem('galleryRefresh')) {
-            generateGallery();
-            sessionStorage.removeItem('galleryRefresh');
-        }
     </script>
 </body>
 </html>
