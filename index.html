@@ -2,14 +2,13 @@
 <html lang="tr">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SLE5PTYP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-W1SLE5PTYP');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SLE5PTYP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-W1SLE5PTYP');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Referans Maslak Real Estate</title>
@@ -34,6 +33,9 @@
             --dark-gray: #333333;
             --sahibinden-yellow: #FFD301;
             --sahibinden-black: #000000;
+            --dark-bg: #121212;
+            --dark-text: #e0e0e0;
+            --dark-mode-active: #3498db; /* Açık mavi renk */
         }
         
         * {
@@ -48,8 +50,15 @@
             color: var(--dark-gray);
             line-height: 1.6;
             scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
         }
         
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        /* Header Styles */
         .top-bar {
             background-color: var(--white);
             padding: 15px 20px;
@@ -57,6 +66,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s;
+        }
+        
+        body.dark-mode .top-bar {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
         }
         
         .header-content {
@@ -66,10 +81,43 @@
             flex-wrap: wrap;
         }
         
+        /* Hamburger Menu Button */
+        .hamburger-container {
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+        
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger-icon {
+            font-size: 24px;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .hamburger-icon {
+            color: var(--dark-text);
+        }
+        
+        /* Logo and Company Name */
         .logo-container {
             display: flex;
             align-items: center;
             cursor: pointer;
+            margin-left: 10px;
+            position: relative;
+            z-index: 1001;
+            transition: transform 0.4s ease;
+        }
+        
+        .sidebar-menu.open ~ .top-bar .logo-container {
+            transform: translateX(280px);
         }
         
         .logo {
@@ -81,7 +129,7 @@
         .company-name {
             display: flex;
             flex-direction: column;
-            margin: 0 15px;
+            margin-left: 15px;
         }
         
         .company-name-main {
@@ -99,6 +147,11 @@
             margin-top: 5px;
         }
         
+        body.dark-mode .company-name-sub {
+            color: var(--dark-text) !important;
+        }
+        
+        /* Header Right Section */
         .header-right {
             display: flex;
             align-items: center;
@@ -110,6 +163,37 @@
             gap: 10px;
         }
         
+        /* Sahibinden Button */
+        .sahibinden-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--sahibinden-yellow);
+            color: var(--sahibinden-black);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+            height: 38px;
+            box-shadow: 0 4px 8px rgba(255, 211, 1, 0.3);
+        }
+        
+        .sahibinden-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 211, 1, 0.4);
+        }
+        
+        .sahibinden-button i {
+            margin-right: 6px;
+            color: var(--sahibinden-black);
+            font-weight: bold;
+            font-style: normal;
+            font-size: 21px; /* %50 büyütülmüş S harfi (normal 14px) */
+        }
+        
+        /* Action Buttons */
         .action-button {
             background-color: var(--primary-red);
             color: var(--white);
@@ -140,6 +224,7 @@
             box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
         }
         
+        /* Language Switcher */
         .language-switcher {
             position: relative;
             margin-left: 10px;
@@ -157,6 +242,12 @@
             display: flex;
             align-items: center;
             transition: all 0.3s;
+        }
+        
+        body.dark-mode .language-button {
+            background-color: #2d2d2d;
+            color: var(--dark-text);
+            border-color: #444;
         }
         
         .language-button:hover {
@@ -181,6 +272,11 @@
             z-index: 10;
         }
         
+        body.dark-mode .language-dropdown {
+            background-color: #2d2d2d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
         .language-dropdown.show {
             display: block;
         }
@@ -194,9 +290,17 @@
             font-size: 14px;
         }
         
+        body.dark-mode .language-option {
+            color: var(--dark-text);
+        }
+        
         .language-option:hover {
             background-color: var(--light-gray);
             color: var(--primary-red);
+        }
+        
+        body.dark-mode .language-option:hover {
+            background-color: #444;
         }
         
         .language-option.active {
@@ -214,6 +318,171 @@
             visibility: visible;
         }
         
+        /* Sidebar Menu */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--white);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: all 0.4s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body.dark-mode .sidebar-menu {
+            background-color: #1e1e1e;
+        }
+        
+        .sidebar-menu.open {
+            left: 0;
+        }
+        
+        .menu-items {
+            list-style: none;
+            padding: 90px 0 0 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        
+        .menu-item {
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        body.dark-mode .menu-item {
+            border-bottom-color: #444;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-link {
+            display: block;
+            padding: 15px 25px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        body.dark-mode .menu-link {
+            color: var(--dark-text);
+        }
+        
+        .menu-link:hover {
+            color: var(--primary-red);
+            background-color: var(--light-gray);
+            padding-left: 30px;
+        }
+        
+        body.dark-mode .menu-link:hover {
+            background-color: #2d2d2d;
+        }
+        
+        .menu-link:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--primary-red);
+        }
+        
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 25px;
+            border-top: 1px solid var(--light-gray);
+            margin-top: auto;
+        }
+        
+        body.dark-mode .dark-mode-toggle {
+            border-top-color: #444;
+        }
+        
+        .toggle-text {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        body.dark-mode .toggle-text {
+            color: var(--dark-text);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--dark-mode-active); /* Açık mavi renk */
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Gallery */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -261,6 +530,7 @@
             grid-row: span 2;
         }
         
+        /* Footer */
         footer {
             background-color: var(--primary-blue);
             color: var(--white);
@@ -287,34 +557,6 @@
             color: var(--primary-red);
         }
         
-        .sahibinden-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        
-        .sahibinden-logo {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--sahibinden-yellow);
-            color: var(--sahibinden-black);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .sahibinden-logo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .sahibinden-logo i {
-            margin-right: 6px;
-            color: var(--sahibinden-black);
-        }
-        
         .contact-info {
             margin: 20px 0;
         }
@@ -334,16 +576,18 @@
             font-size: 0.8rem;
             color: #bdc3c7;
         }
-
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .company-name {
+            .logo-container {
                 margin: 10px 0;
                 text-align: center;
+                transform: none !important;
             }
             
             .header-right {
@@ -371,22 +615,73 @@
             .img-wide, .img-large {
                 grid-column: span 2;
             }
+            
+            .sidebar-menu {
+                width: 250px;
+            }
+            
+            .hamburger-container {
+                margin-right: 0;
+                margin-left: 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Hamburger Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <ul class="menu-items">
+            <li class="menu-item">
+                <a href="about.html" class="menu-link" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</a>
+            </li>
+            <li class="menu-item">
+                <a href="services.html" class="menu-link" data-tr="Servislerimiz" data-en="Our Services">Servislerimiz</a>
+            </li>
+            <li class="menu-item">
+                <a href="reference.html" class="menu-link" data-tr="Referanslarımız" data-en="References">Referanslarımız</a>
+            </li>
+        </ul>
+        
+        <!-- Dark Mode Toggle at the bottom of the menu -->
+        <div class="dark-mode-toggle">
+            <span class="toggle-text" data-tr="Dark Mode" data-en="Dark Mode">Dark Mode</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <!-- Top Bar -->
     <div class="top-bar">
         <div class="header-content">
-            <div class="logo-container" id="logoLink">
-                <img src="Firmalogo.jpg" alt="Referans Maslak Logo" class="logo">
-                <div class="company-name">
-                    <div class="company-name-main">REFERANS MASLAK</div>
-                    <div class="company-name-sub">Real Estate</div>
+            <!-- Hamburger Button and Logo Container -->
+            <div style="display: flex; align-items: center;">
+                <div class="hamburger-container">
+                    <button class="hamburger-btn" id="hamburgerBtn">
+                        <i class="fas fa-bars hamburger-icon"></i>
+                    </button>
+                </div>
+                
+                <div class="logo-container" id="logoLink">
+                    <img src="Firmalogo.jpg" alt="Referans Maslak Logo" class="logo">
+                    <div class="company-name">
+                        <div class="company-name-main">REFERANS MASLAK</div>
+                        <div class="company-name-sub">Real Estate</div>
+                    </div>
                 </div>
             </div>
             
             <div class="header-right">
                 <div class="action-buttons">
+                    <!-- Sahibinden Button -->
+                    <a href="https://referansmaslak.sahibinden.com/" target="_blank" class="sahibinden-button">
+                        <i>S</i> sahibinden
+                    </a>
+                    
                     <a href="tel:+905346270735" class="action-button" id="callButton">
                         <i class="fas fa-phone-alt"></i> <span class="call-text">ARA</span>
                     </a>
@@ -412,8 +707,10 @@
         </div>
     </div>
     
+    <!-- Gallery -->
     <div class="gallery" id="galleryContainer"></div>
     
+    <!-- Footer -->
     <footer>
         <div class="social-links">
             <a href="https://www.instagram.com/referansmaslak.ersinsavci?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon">
@@ -421,11 +718,6 @@
             </a>
             <a href="https://www.linkedin.com/in/ersin-savci-091b9053/" target="_blank" class="social-icon">
                 <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://referansmaslak.sahibinden.com/" target="_blank" class="sahibinden-link">
-                <span class="sahibinden-logo">
-                    <i class="fas fa-home"></i> sahibinden.com
-                </span>
             </a>
         </div>
         
@@ -465,6 +757,56 @@
                 });
             });
 
+            // Hamburger Menu Functionality
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarMenu = document.getElementById('sidebarMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuLinks = document.querySelectorAll('.menu-link');
+            const toggleText = document.querySelector('.toggle-text');
+            
+            // Menu open/close
+            hamburgerBtn.addEventListener('click', function() {
+                sidebarMenu.classList.toggle('open');
+                menuOverlay.classList.toggle('active');
+                
+                // Change hamburger icon to X
+                const icon = this.querySelector('i');
+                if (sidebarMenu.classList.contains('open')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close menu when clicking outside
+            menuOverlay.addEventListener('click', function() {
+                sidebarMenu.classList.remove('open');
+                this.classList.remove('active');
+                hamburgerBtn.querySelector('i').classList.remove('fa-times');
+                hamburgerBtn.querySelector('i').classList.add('fa-bars');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            // Check for saved user preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.checked = true;
+            }
+            
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+
             // Language switcher
             const languageToggle = document.getElementById('languageToggle');
             const languageDropdown = document.getElementById('languageDropdown');
@@ -495,9 +837,17 @@
                 if (lang === 'tr') {
                     callButtonText.textContent = 'ARA';
                     directionButtonText.textContent = 'KONUM';
+                    toggleText.textContent = toggleText.getAttribute('data-tr');
+                    menuLinks.forEach(link => {
+                        link.textContent = link.getAttribute('data-tr');
+                    });
                 } else {
                     callButtonText.textContent = 'CALL';
                     directionButtonText.textContent = 'DIRECTIONS';
+                    toggleText.textContent = toggleText.getAttribute('data-en');
+                    menuLinks.forEach(link => {
+                        link.textContent = link.getAttribute('data-en');
+                    });
                 }
             });
 
