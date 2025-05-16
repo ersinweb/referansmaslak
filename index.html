@@ -35,7 +35,9 @@
             --sahibinden-black: #000000;
             --dark-bg: #121212;
             --dark-text: #e0e0e0;
-            --dark-mode-active: #3498db; /* Açık mavi renk */
+            --dark-mode-active: #3498db;
+            --language-active: #3498db;
+            --language-text: #000000; /* EN yazısı siyah olacak */
         }
         
         * {
@@ -190,7 +192,7 @@
             color: var(--sahibinden-black);
             font-weight: bold;
             font-style: normal;
-            font-size: 21px; /* %50 büyütülmüş S harfi (normal 14px) */
+            font-size: 21px;
         }
         
         /* Action Buttons */
@@ -224,100 +226,6 @@
             box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
         }
         
-        /* Language Switcher */
-        .language-switcher {
-            position: relative;
-            margin-left: 10px;
-        }
-        
-        .language-button {
-            background-color: var(--white);
-            color: var(--dark-gray);
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        body.dark-mode .language-button {
-            background-color: #2d2d2d;
-            color: var(--dark-text);
-            border-color: #444;
-        }
-        
-        .language-button:hover {
-            border-color: var(--primary-red);
-        }
-        
-        .language-button i {
-            margin-left: 6px;
-            font-size: 12px;
-        }
-        
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 8px 0;
-            min-width: 110px;
-            display: none;
-            z-index: 10;
-        }
-        
-        body.dark-mode .language-dropdown {
-            background-color: #2d2d2d;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .language-dropdown.show {
-            display: block;
-        }
-        
-        .language-option {
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-        
-        body.dark-mode .language-option {
-            color: var(--dark-text);
-        }
-        
-        .language-option:hover {
-            background-color: var(--light-gray);
-            color: var(--primary-red);
-        }
-        
-        body.dark-mode .language-option:hover {
-            background-color: #444;
-        }
-        
-        .language-option.active {
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-        
-        .language-option i {
-            margin-right: 6px;
-            font-size: 12px;
-            visibility: hidden;
-        }
-        
-        .language-option.active i {
-            visibility: visible;
-        }
-        
         /* Sidebar Menu */
         .sidebar-menu {
             position: fixed;
@@ -332,10 +240,15 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            background-image: url('menubackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         body.dark-mode .sidebar-menu {
-            background-color: #1e1e1e;
+            background-color: rgba(30, 30, 30, 0.9);
+            background-blend-mode: overlay;
         }
         
         .sidebar-menu.open {
@@ -350,11 +263,11 @@
         }
         
         .menu-item {
-            border-bottom: 1px solid var(--light-gray);
+            border-bottom: 1px solid rgba(245, 245, 245, 0.2);
         }
         
         body.dark-mode .menu-item {
-            border-bottom-color: #444;
+            border-bottom-color: rgba(68, 68, 68, 0.5);
         }
         
         .menu-item:last-child {
@@ -369,20 +282,23 @@
             font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
         }
         
         body.dark-mode .menu-link {
             color: var(--dark-text);
+            background-color: rgba(30, 30, 30, 0.7);
         }
         
         .menu-link:hover {
             color: var(--primary-red);
-            background-color: var(--light-gray);
+            background-color: rgba(245, 245, 245, 0.9);
             padding-left: 30px;
         }
         
         body.dark-mode .menu-link:hover {
-            background-color: #2d2d2d;
+            background-color: rgba(45, 45, 45, 0.9);
         }
         
         .menu-link:hover::before {
@@ -395,34 +311,160 @@
             background-color: var(--primary-red);
         }
         
-        /* Dark Mode Toggle */
-        .dark-mode-toggle {
+        /* New Toggle Buttons Container */
+        .toggle-buttons-container {
+            padding: 15px;
+            border-top: 1px solid rgba(245, 245, 245, 0.2);
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        body.dark-mode .toggle-buttons-container {
+            border-top-color: rgba(68, 68, 68, 0.5);
+            background-color: rgba(30, 30, 30, 0.7);
+        }
+        
+        /* Language Toggle Button */
+        .language-toggle-button {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 25px;
-            border-top: 1px solid var(--light-gray);
-            margin-top: auto;
+            padding: 12px 15px;
+            background-color: rgba(245, 245, 245, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s;
         }
         
-        body.dark-mode .dark-mode-toggle {
-            border-top-color: #444;
+        body.dark-mode .language-toggle-button {
+            background-color: rgba(45, 45, 45, 0.8);
         }
         
-        .toggle-text {
-            font-weight: 600;
+        .language-icon {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
             color: var(--primary-blue);
         }
         
-        body.dark-mode .toggle-text {
+        body.dark-mode .language-icon {
             color: var(--dark-text);
+        }
+        
+        .language-toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
+        
+        .language-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .language-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .language-slider:before {
+            position: absolute;
+            content: "TR";
+            height: 26px;
+            width: 36px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+        
+        input:checked + .language-slider {
+            background-color: var(--language-active);
+        }
+        
+        input:checked + .language-slider:before {
+            content: "EN";
+            transform: translateX(36px);
+            color: var(--language-text); /* EN yazısı siyah olacak */
+        }
+        
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: rgba(245, 245, 245, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        body.dark-mode .dark-mode-toggle-button {
+            background-color: rgba(45, 45, 45, 0.8);
+        }
+        
+        .dark-mode-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+        
+        .dark-mode-icon .sun-moon {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode-icon .sun {
+            background-color: #000000; /* Siyah güneş */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .dark-mode-icon .moon {
+            background-color: transparent;
+            box-shadow: -6px -6px 0 0 #ffffff inset; /* Beyaz ay */
+            transform: scale(0.8);
+        }
+        
+        body.dark-mode .dark-mode-icon .sun {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        
+        body.dark-mode .dark-mode-icon .moon {
+            opacity: 1;
+            transform: scale(1);
         }
         
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 80px;
+            height: 34px;
         }
         
         .toggle-switch input {
@@ -440,14 +482,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 24px;
+            border-radius: 34px;
         }
         
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 26px;
+            width: 26px;
             left: 4px;
             bottom: 4px;
             background-color: white;
@@ -456,11 +498,11 @@
         }
         
         input:checked + .slider {
-            background-color: var(--dark-mode-active); /* Açık mavi renk */
+            background-color: var(--dark-mode-active);
         }
         
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(46px);
         }
         
         /* Menu Overlay */
@@ -601,21 +643,6 @@
                 justify-content: flex-start;
             }
             
-            .language-switcher {
-                margin-left: auto;
-            }
-            
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                grid-auto-rows: 150px;
-                gap: 8px;
-                padding: 10px;
-            }
-            
-            .img-wide, .img-large {
-                grid-column: span 2;
-            }
-            
             .sidebar-menu {
                 width: 250px;
             }
@@ -623,6 +650,16 @@
             .hamburger-container {
                 margin-right: 0;
                 margin-left: 15px;
+            }
+            
+            /* Adjust menu items padding for mobile */
+            .menu-items {
+                padding: 90px 0 10px 0;
+            }
+            
+            /* Make sure toggle buttons are visible */
+            .toggle-buttons-container {
+                padding: 12px 15px;
             }
         }
     </style>
@@ -642,13 +679,28 @@
             </li>
         </ul>
         
-        <!-- Dark Mode Toggle at the bottom of the menu -->
-        <div class="dark-mode-toggle">
-            <span class="toggle-text" data-tr="Dark Mode" data-en="Dark Mode">Dark Mode</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="darkModeToggle">
-                <span class="slider"></span>
-            </label>
+        <!-- Toggle Buttons Container -->
+        <div class="toggle-buttons-container">
+            <!-- Language Toggle Button -->
+            <div class="language-toggle-button">
+                <span class="language-icon">文A</span>
+                <label class="language-toggle-switch">
+                    <input type="checkbox" id="languageMenuToggle">
+                    <span class="language-slider"></span>
+                </label>
+            </div>
+            
+            <!-- Dark Mode Toggle Button -->
+            <div class="dark-mode-toggle-button">
+                <span class="dark-mode-icon">
+                    <div class="sun-moon sun"></div>
+                    <div class="sun-moon moon"></div>
+                </span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
     </div>
     
@@ -688,20 +740,6 @@
                     <a href="https://maps.app.goo.gl/JvEdP2CgWucA9CLR9?g_st=aw" target="_blank" class="action-button" id="directionButton">
                         <i class="fas fa-map-marked-alt"></i> <span class="direction-text">KONUM</span>
                     </a>
-                </div>
-                
-                <div class="language-switcher">
-                    <div class="language-button" id="languageToggle">
-                        TR <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="language-dropdown" id="languageDropdown">
-                        <div class="language-option active" data-lang="tr">
-                            <i class="fas fa-check"></i> Türkçe
-                        </div>
-                        <div class="language-option" data-lang="en">
-                            <i class="fas fa-check"></i> English
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -762,7 +800,6 @@
             const sidebarMenu = document.getElementById('sidebarMenu');
             const menuOverlay = document.getElementById('menuOverlay');
             const menuLinks = document.querySelectorAll('.menu-link');
-            const toggleText = document.querySelector('.toggle-text');
             
             // Menu open/close
             hamburgerBtn.addEventListener('click', function() {
@@ -790,66 +827,68 @@
             
             // Dark Mode Toggle
             const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeIcon = document.querySelector('.dark-mode-icon');
             
             // Check for saved user preference
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
                 darkModeToggle.checked = true;
+                darkModeIcon.querySelector('.sun').style.opacity = '0';
+                darkModeIcon.querySelector('.sun').style.transform = 'scale(0.5)';
+                darkModeIcon.querySelector('.moon').style.opacity = '1';
+                darkModeIcon.querySelector('.moon').style.transform = 'scale(1)';
             }
             
             darkModeToggle.addEventListener('change', function() {
                 if (this.checked) {
                     document.body.classList.add('dark-mode');
                     localStorage.setItem('darkMode', 'enabled');
+                    darkModeIcon.querySelector('.sun').style.opacity = '0';
+                    darkModeIcon.querySelector('.sun').style.transform = 'scale(0.5)';
+                    darkModeIcon.querySelector('.moon').style.opacity = '1';
+                    darkModeIcon.querySelector('.moon').style.transform = 'scale(1)';
                 } else {
                     document.body.classList.remove('dark-mode');
                     localStorage.setItem('darkMode', 'disabled');
+                    darkModeIcon.querySelector('.sun').style.opacity = '1';
+                    darkModeIcon.querySelector('.sun').style.transform = 'scale(1)';
+                    darkModeIcon.querySelector('.moon').style.opacity = '0';
+                    darkModeIcon.querySelector('.moon').style.transform = 'scale(0.8)';
                 }
             });
 
-            // Language switcher
-            const languageToggle = document.getElementById('languageToggle');
-            const languageDropdown = document.getElementById('languageDropdown');
+            // Language Toggle in Menu
+            const languageMenuToggle = document.getElementById('languageMenuToggle');
             const callButtonText = document.querySelector('.call-text');
             const directionButtonText = document.querySelector('.direction-text');
             
-            languageToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                languageDropdown.classList.toggle('show');
+            // Check for saved language preference
+            if (localStorage.getItem('language') === 'en') {
+                languageMenuToggle.checked = true;
+                updateLanguage('en');
+            }
+            
+            languageMenuToggle.addEventListener('change', function() {
+                const lang = this.checked ? 'en' : 'tr';
+                localStorage.setItem('language', lang);
+                updateLanguage(lang);
             });
             
-            document.addEventListener('click', function() {
-                languageDropdown.classList.remove('show');
-            });
-            
-            document.getElementById('languageDropdown').addEventListener('click', function(e) {
-                const option = e.target.closest('.language-option');
-                if (!option) return;
+            function updateLanguage(lang) {
+                // Update menu items
+                menuLinks.forEach(link => {
+                    link.textContent = link.getAttribute(`data-${lang}`);
+                });
                 
-                const lang = option.getAttribute('data-lang');
-                
-                document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
-                option.classList.add('active');
-                
-                languageToggle.innerHTML = lang === 'tr' ? 'TR <i class="fas fa-chevron-down"></i>' : 'EN <i class="fas fa-chevron-down"></i>';
-                languageDropdown.classList.remove('show');
-                
+                // Update action buttons
                 if (lang === 'tr') {
                     callButtonText.textContent = 'ARA';
                     directionButtonText.textContent = 'KONUM';
-                    toggleText.textContent = toggleText.getAttribute('data-tr');
-                    menuLinks.forEach(link => {
-                        link.textContent = link.getAttribute('data-tr');
-                    });
                 } else {
                     callButtonText.textContent = 'CALL';
                     directionButtonText.textContent = 'DIRECTIONS';
-                    toggleText.textContent = toggleText.getAttribute('data-en');
-                    menuLinks.forEach(link => {
-                        link.textContent = link.getAttribute('data-en');
-                    });
                 }
-            });
+            }
 
             // Image gallery with perfect masonry layout
             const gallery = document.getElementById('galleryContainer');
