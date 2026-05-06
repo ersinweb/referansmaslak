@@ -902,176 +902,93 @@
                 }
             }
 
-            // Image gallery with perfect masonry layout
+            // ── Gallery with progressive + lazy loading ──
             const gallery = document.getElementById('galleryContainer');
             const imageCount = 50;
             const extensions = ['jpg', 'jpeg', 'png', 'webp'];
+            const INITIAL_BATCH = 8;   // hemen yüklenecek
+            const BATCH_SIZE    = 6;   // her seferinde yüklenecek
             
-            // Load all images at once
-            Promise.all(
-                Array.from({length: imageCount}, (_, i) => i + 1)
-                    .map(num => loadImage(num))
-            ).then(images => {
-                // Filter out failed loads
-                const loadedImages = images.filter(img => img !== null);
-                
-                // Classify images
-                const portraitImages = loadedImages.filter(img => img.isPortrait);
-                const landscapeImages = loadedImages.filter(img => !img.isPortrait);
-                
-                // Further classify landscape images
-                const wideImages = landscapeImages.filter(img => {
-                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
-                    return Math.abs(ratio - (16/9)) < 0.2; // 20% tolerance for 16:9
-                });
-                
-                const otherLandscape = landscapeImages.filter(img => {
-                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
-                    return Math.abs(ratio - (16/9)) >= 0.2;
-                });
-                
-                // Distribute other landscape images between large and small
-                const otherLandscapeCount = otherLandscape.length;
-                const largeCount = Math.floor(otherLandscapeCount / 2);
-                const smallCount = otherLandscapeCount - largeCount;
-                
-                // Shuffle arrays for random distribution
-                shuffleArray(portraitImages);
-                shuffleArray(wideImages);
-                shuffleArray(otherLandscape);
-                
-                // Create image elements with appropriate classes
-                const imageElements = [];
-                
-                // Add wide images
-                wideImages.forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-wide';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add large landscape images
-                otherLandscape.slice(0, largeCount).forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-large';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add small landscape images
-                otherLandscape.slice(largeCount).forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add portrait images
-                portraitImages.forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-tall';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Shuffle all images for better distribution
-                shuffleArray(imageElements);
-                
-                // Add all images to gallery
-                imageElements.forEach(item => gallery.appendChild(item));
-                
-                // After all images are added, optimize layout to fill gaps
-                setTimeout(optimizeLayout, 100);
-            });
-            
-            // Function to optimize layout by filling gaps
-            function optimizeLayout() {
-                const items = Array.from(document.querySelectorAll('.gallery-item'));
-                const grid = document.querySelector('.gallery');
-                
-                // Get grid styles
-                const gridStyles = window.getComputedStyle(grid);
-                const columnWidth = parseInt(gridStyles.gridTemplateColumns.split(' ')[0]);
-                const rowHeight = parseInt(gridStyles.gridAutoRows);
-                const gap = parseInt(gridStyles.gap);
-                
-                // Track occupied grid cells
-                const occupied = new Set();
-                
-                // Place items and mark occupied cells
-                items.forEach(item => {
-                    const colSpan = item.classList.contains('img-wide') || item.classList.contains('img-large') ? 2 : 1;
-                    const rowSpan = item.classList.contains('img-tall') ? 2 : 
-                                    item.classList.contains('img-large') ? 2 : 1;
-                    
-                    // Find first available position
-                    let placed = false;
-                    for (let row = 0; !placed; row++) {
-                        for (let col = 0; col < Math.floor(grid.clientWidth / (columnWidth + gap)); col++) {
-                            // Check if this position can accommodate the item
-                            let canPlace = true;
-                            for (let r = row; r < row + rowSpan; r++) {
-                                for (let c = col; c < col + colSpan; c++) {
-                                    if (occupied.has(`${c},${r}`)) {
-                                        canPlace = false;
-                                        break;
-                                    }
-                                }
-                                if (!canPlace) break;
-                            }
-                            
-                            if (canPlace) {
-                                // Place the item here
-                                item.style.gridColumn = `${col + 1} / span ${colSpan}`;
-                                item.style.gridRow = `${row + 1} / span ${rowSpan}`;
-                                
-                                // Mark cells as occupied
-                                for (let r = row; r < row + rowSpan; r++) {
-                                    for (let c = col; c < col + colSpan; c++) {
-                                        occupied.add(`${c},${r}`);
-                                    }
-                                }
-                                
-                                placed = true;
-                                break;
-                            }
+            // Tüm numaraları karıştır
+            const allNumbers = Array.from({length: imageCount}, (_, i) => i + 1);
+            shuffleArray(allNumbers);
+
+            let loadedCount = 0;
+            let loading = false;
+
+            // IntersectionObserver: galerinin sonuna yaklaşınca daha fazla yükle
+            const sentinel = document.createElement('div');
+            sentinel.id = 'gallery-sentinel';
+            sentinel.style.height = '1px';
+            gallery.parentNode.insertBefore(sentinel, gallery.nextSibling);
+
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !loading && loadedCount < allNumbers.length) {
+                    loadNextBatch();
+                }
+            }, { rootMargin: '400px' });
+
+            observer.observe(sentinel);
+
+            // İlk batch'i hemen başlat
+            loadNextBatch(INITIAL_BATCH);
+
+            function loadNextBatch(count) {
+                if (loading || loadedCount >= allNumbers.length) return;
+                loading = true;
+                const batchSize = count || BATCH_SIZE;
+                const batch = allNumbers.slice(loadedCount, loadedCount + batchSize);
+                loadedCount += batch.length;
+
+                Promise.all(batch.map(num => loadImage(num))).then(images => {
+                    const loaded = images.filter(Boolean);
+                    loaded.forEach(imgData => {
+                        const container = document.createElement('div');
+                        const ratio = imgData.img.naturalWidth / imgData.img.naturalHeight;
+                        if (imgData.isPortrait) {
+                            container.className = 'gallery-item img-tall';
+                        } else if (Math.abs(ratio - (16/9)) < 0.2) {
+                            container.className = 'gallery-item img-wide';
+                        } else if (Math.random() > 0.5) {
+                            container.className = 'gallery-item img-large';
+                        } else {
+                            container.className = 'gallery-item';
                         }
-                    }
+                        // Fade-in efekti
+                        imgData.img.style.opacity = '0';
+                        imgData.img.style.transition = 'opacity 0.4s ease';
+                        container.appendChild(imgData.img);
+                        gallery.appendChild(container);
+                        // Kısa gecikme ile fade-in
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => { imgData.img.style.opacity = '1'; });
+                        });
+                    });
+                    loading = false;
+                    // Eğer hâlâ sentinel görünüyorsa devam et
+                    if (loadedCount < allNumbers.length) observer.observe(sentinel);
                 });
             }
-            
-            // Function to load an image with extension fallback
+
+            // Uzantı fallback ile resim yükle
             function loadImage(number) {
                 return new Promise(resolve => {
                     const img = new Image();
+                    img.loading = 'lazy';
                     let currentExt = 0;
-                    
                     function tryExtension() {
-                        if (currentExt >= extensions.length) {
-                            console.log(`Image ${number} not found`);
-                            resolve(null);
-                            return;
-                        }
-                        
+                        if (currentExt >= extensions.length) { resolve(null); return; }
                         const ext = extensions[currentExt++];
                         img.src = `Gorsel (${number}).${ext}`;
                         img.alt = `Referans Maslak Proje ${number}`;
                     }
-                    
-                    img.onload = function() {
-                        resolve({
-                            img: img,
-                            isPortrait: img.naturalHeight > img.naturalWidth
-                        });
-                    };
+                    img.onload = () => resolve({ img, isPortrait: img.naturalHeight > img.naturalWidth });
                     img.onerror = tryExtension;
-                    
                     tryExtension();
                 });
             }
-            
-            // Fisher-Yates shuffle algorithm
+
+            // Fisher-Yates shuffle
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
