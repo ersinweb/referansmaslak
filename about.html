@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referans Maslak Real Estate</title>
+    <title>Referans Maslak Real Estate - About</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @font-face {
@@ -37,7 +37,14 @@
             --dark-text: #e0e0e0;
             --dark-mode-active: #3498db;
             --language-active: #3498db;
-            --language-text: #000000; /* EN yazısı siyah olacak */
+            --language-text: #000000;
+            --about-bg: #f9f9f9;
+            --about-text: #333333;
+        }
+        
+        body.dark-mode {
+            --about-bg: #1e1e1e;
+            --about-text: #e0e0e0;
         }
         
         * {
@@ -404,7 +411,7 @@
         input:checked + .language-slider:before {
             content: "EN";
             transform: translateX(36px);
-            color: var(--language-text); /* EN yazısı siyah olacak */
+            color: var(--language-text);
         }
         
         /* Dark Mode Toggle Button */
@@ -440,13 +447,13 @@
         }
         
         .dark-mode-icon .sun {
-            background-color: #000000; /* Siyah güneş */
+            background-color: #000000;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
         .dark-mode-icon .moon {
             background-color: transparent;
-            box-shadow: -6px -6px 0 0 #ffffff inset; /* Beyaz ay */
+            box-shadow: -6px -6px 0 0 #ffffff inset;
             transform: scale(0.8);
         }
         
@@ -524,52 +531,74 @@
             visibility: visible;
         }
         
-        /* Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            grid-auto-rows: 200px;
-            gap: 10px;
-            padding: 15px;
+        /* About Content */
+        .about-section {
+            background-color: var(--about-bg);
+            color: var(--about-text);
+            padding: 40px 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
         
-        .gallery img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
         }
         
-        .gallery-item {
-            position: relative;
+        .profile-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            border-radius: 8px;
             overflow: hidden;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        .gallery-item:hover {
-            transform: scale(1.03);
-            z-index: 1;
+        .profile-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
         }
         
-        .gallery-item:hover img {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        .profile-image:hover img {
+            transform: scale(1.02);
         }
         
-        .img-wide {
-            grid-column: span 2;
+        .about-content {
+            flex: 2;
+            min-width: 300px;
         }
         
-        .img-tall {
-            grid-row: span 2;
+        .about-title {
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            font-family: 'QarantaBold', Arial, sans-serif;
+            font-size: 2rem;
         }
         
-        .img-large {
-            grid-column: span 2;
-            grid-row: span 2;
+        .about-text {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
         }
         
         /* Footer */
@@ -661,6 +690,17 @@
             .toggle-buttons-container {
                 padding: 12px 15px;
             }
+            
+            /* About section responsive */
+            .about-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .profile-image {
+                max-width: 100%;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -672,7 +712,7 @@
                 <a href="index.html" class="menu-link" data-tr="Ana Sayfa" data-en="Main Page">Ana Sayfa</a>
             </li>
             <li class="menu-item">
-                <a href="about.html" class="menu-link" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</a>
+                <a href="about.html" class="menu-link active" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</a>
             </li>
             <li class="menu-item">
                 <a href="services.html" class="menu-link" data-tr="Servislerimiz" data-en="Our Services">Servislerimiz</a>
@@ -745,8 +785,45 @@
         </div>
     </div>
     
-    <!-- Gallery -->
-    <div class="gallery" id="galleryContainer"></div>
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="profile-image">
+                <img src="portrefoto.jpg" alt="Ersin SAVCI">
+            </div>
+            
+            <div class="about-content">
+                <div id="content-tr" class="language-content active">
+                    
+                    <p class="about-text">İstanbul Teknik Üniversitesi İnşaat Mühendisliği bölümünden mezun olduktan sonra, aynı üniversitede MBA programını tamamladım. 15 yıl boyunca Koç, Doğuş ve Soyak gibi Türkiye'nin önde gelen inşaat firmalarında çalıştım. Hem sahada hem ofiste, birçok projede aktif görev alarak güçlü bir teknik ve yönetsel tecrübe edindim.</p>
+                    
+                    <p class="about-text">2018 yılında, bu birikimimi gayrimenkul sektörüne taşıdım. İlk yılımda gösterdiğim performans ve yatırımcılarımdan gelen talep üzerine daha butik ve kişiye özel bir hizmet anlayışına yöneltti. Bu vizyonla Referans Maslak markasını kurdum.</p>
+                    
+                    <p class="about-text">Benim için gayrimenkul danışmanlığı, sadece bir alım-satım değil; doğru analiz, stratejik yönlendirme ve güvene dayalı uzun vadeli bir iş ortaklığıdır. Her portföy bir projedir; her yatırımcı ise kıymetli bir yol arkadaşıdır.</p>
+                    
+                    <p class="about-text">Eğer siz de yatırımlarınızı birlikte değerlendirmek isterseniz, ofisimizde bir kahve eşliğinde görüşmekten memnuniyet duyarım.</p>
+                    
+                    <p class="signature">Saygılarımla,<br>
+                    Ersin SAVCI<br>
+                    İnşaat Mühendisi | MBA | Gayrimenkul Brokerı</p>
+                </div>
+                
+                <div id="content-en" class="language-content">
+                    <p class="about-text">After graduating from Istanbul Technical University with a degree in Civil Engineering, I completed my MBA at the same university. I gained strong technical and managerial experience over 15 years working in leading construction companies in Turkey such as Koç, Doğuş, and Soyak. I took active roles in numerous projects, both on-site and in the office.</p>
+                    
+                    <p class="about-text">In 2018, I transitioned this expertise into the real estate sector. Due to my strong performance in the first year and the increasing demand from my clients, I shifted towards a more boutique and personalized service approach. This vision led me to establish the Referans Maslak brand.</p>
+                    
+                    <p class="about-text">For me, real estate consultancy is not just about buying and selling; it's about accurate analysis, strategic guidance, and building long-term partnerships based on trust. Every portfolio is a project, and every client is a valued partner on this journey.</p>
+                    
+                    <p class="about-text">If you would like to discuss your investments together, I would be happy to meet you at our office over a cup of coffee.</p>
+                    
+                    <p class="signature">Best regards,<br>
+                    Ersin SAVCI<br>
+                    Civil Engineer | MBA | Real Estate Broker</p>
+                </div>
+            </div>
+        </div>
+    </section>
     
     <!-- Footer -->
     <footer>
@@ -786,10 +863,10 @@
                 }
             });
 
-            // Logo tıklaması - ana sayfada zaten buradayız, üste scroll yeterli
+            // Go to homepage when logo is clicked
             document.getElementById('logoLink').addEventListener('click', function(e) {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.location.href = 'index.html';
             });
 
             // Hamburger Menu Functionality
@@ -822,7 +899,7 @@
                 hamburgerBtn.querySelector('i').classList.add('fa-bars');
             });
 
-            // Navigate on menu link click
+            // Navigate on menu link click (ensures overlay doesn't block navigation)
             menuLinks.forEach(function(link) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -873,17 +950,30 @@
             const languageMenuToggle = document.getElementById('languageMenuToggle');
             const callButtonText = document.querySelector('.call-text');
             const directionButtonText = document.querySelector('.direction-text');
+            const contentTr = document.getElementById('content-tr');
+            const contentEn = document.getElementById('content-en');
             
             // Check for saved language preference
             if (localStorage.getItem('language') === 'en') {
                 languageMenuToggle.checked = true;
                 updateLanguage('en');
+                contentTr.classList.remove('active');
+                contentEn.classList.add('active');
             }
             
             languageMenuToggle.addEventListener('change', function() {
                 const lang = this.checked ? 'en' : 'tr';
                 localStorage.setItem('language', lang);
                 updateLanguage(lang);
+                
+                // Toggle language content
+                if (lang === 'en') {
+                    contentTr.classList.remove('active');
+                    contentEn.classList.add('active');
+                } else {
+                    contentEn.classList.remove('active');
+                    contentTr.classList.add('active');
+                }
             });
             
             function updateLanguage(lang) {
@@ -900,184 +990,6 @@
                     callButtonText.textContent = 'CALL';
                     directionButtonText.textContent = 'DIRECTIONS';
                 }
-            }
-
-            // Image gallery with perfect masonry layout
-            const gallery = document.getElementById('galleryContainer');
-            const imageCount = 50;
-            const extensions = ['jpg', 'jpeg', 'png', 'webp'];
-            
-            // Load all images at once
-            Promise.all(
-                Array.from({length: imageCount}, (_, i) => i + 1)
-                    .map(num => loadImage(num))
-            ).then(images => {
-                // Filter out failed loads
-                const loadedImages = images.filter(img => img !== null);
-                
-                // Classify images
-                const portraitImages = loadedImages.filter(img => img.isPortrait);
-                const landscapeImages = loadedImages.filter(img => !img.isPortrait);
-                
-                // Further classify landscape images
-                const wideImages = landscapeImages.filter(img => {
-                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
-                    return Math.abs(ratio - (16/9)) < 0.2; // 20% tolerance for 16:9
-                });
-                
-                const otherLandscape = landscapeImages.filter(img => {
-                    const ratio = img.img.naturalWidth / img.img.naturalHeight;
-                    return Math.abs(ratio - (16/9)) >= 0.2;
-                });
-                
-                // Distribute other landscape images between large and small
-                const otherLandscapeCount = otherLandscape.length;
-                const largeCount = Math.floor(otherLandscapeCount / 2);
-                const smallCount = otherLandscapeCount - largeCount;
-                
-                // Shuffle arrays for random distribution
-                shuffleArray(portraitImages);
-                shuffleArray(wideImages);
-                shuffleArray(otherLandscape);
-                
-                // Create image elements with appropriate classes
-                const imageElements = [];
-                
-                // Add wide images
-                wideImages.forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-wide';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add large landscape images
-                otherLandscape.slice(0, largeCount).forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-large';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add small landscape images
-                otherLandscape.slice(largeCount).forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Add portrait images
-                portraitImages.forEach(imgData => {
-                    const container = document.createElement('div');
-                    container.className = 'gallery-item img-tall';
-                    container.appendChild(imgData.img);
-                    imageElements.push(container);
-                });
-                
-                // Shuffle all images for better distribution
-                shuffleArray(imageElements);
-                
-                // Add all images to gallery
-                imageElements.forEach(item => gallery.appendChild(item));
-                
-                // After all images are added, optimize layout to fill gaps
-                setTimeout(optimizeLayout, 100);
-            });
-            
-            // Function to optimize layout by filling gaps
-            function optimizeLayout() {
-                const items = Array.from(document.querySelectorAll('.gallery-item'));
-                const grid = document.querySelector('.gallery');
-                
-                // Get grid styles
-                const gridStyles = window.getComputedStyle(grid);
-                const columnWidth = parseInt(gridStyles.gridTemplateColumns.split(' ')[0]);
-                const rowHeight = parseInt(gridStyles.gridAutoRows);
-                const gap = parseInt(gridStyles.gap);
-                
-                // Track occupied grid cells
-                const occupied = new Set();
-                
-                // Place items and mark occupied cells
-                items.forEach(item => {
-                    const colSpan = item.classList.contains('img-wide') || item.classList.contains('img-large') ? 2 : 1;
-                    const rowSpan = item.classList.contains('img-tall') ? 2 : 
-                                    item.classList.contains('img-large') ? 2 : 1;
-                    
-                    // Find first available position
-                    let placed = false;
-                    for (let row = 0; !placed; row++) {
-                        for (let col = 0; col < Math.floor(grid.clientWidth / (columnWidth + gap)); col++) {
-                            // Check if this position can accommodate the item
-                            let canPlace = true;
-                            for (let r = row; r < row + rowSpan; r++) {
-                                for (let c = col; c < col + colSpan; c++) {
-                                    if (occupied.has(`${c},${r}`)) {
-                                        canPlace = false;
-                                        break;
-                                    }
-                                }
-                                if (!canPlace) break;
-                            }
-                            
-                            if (canPlace) {
-                                // Place the item here
-                                item.style.gridColumn = `${col + 1} / span ${colSpan}`;
-                                item.style.gridRow = `${row + 1} / span ${rowSpan}`;
-                                
-                                // Mark cells as occupied
-                                for (let r = row; r < row + rowSpan; r++) {
-                                    for (let c = col; c < col + colSpan; c++) {
-                                        occupied.add(`${c},${r}`);
-                                    }
-                                }
-                                
-                                placed = true;
-                                break;
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Function to load an image with extension fallback
-            function loadImage(number) {
-                return new Promise(resolve => {
-                    const img = new Image();
-                    let currentExt = 0;
-                    
-                    function tryExtension() {
-                        if (currentExt >= extensions.length) {
-                            console.log(`Image ${number} not found`);
-                            resolve(null);
-                            return;
-                        }
-                        
-                        const ext = extensions[currentExt++];
-                        img.src = `Gorsel (${number}).${ext}`;
-                        img.alt = `Referans Maslak Proje ${number}`;
-                    }
-                    
-                    img.onload = function() {
-                        resolve({
-                            img: img,
-                            isPortrait: img.naturalHeight > img.naturalWidth
-                        });
-                    };
-                    img.onerror = tryExtension;
-                    
-                    tryExtension();
-                });
-            }
-            
-            // Fisher-Yates shuffle algorithm
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
             }
         });
     </script>

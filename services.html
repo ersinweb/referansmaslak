@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SLE5PTYP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-W1SLE5PTYP');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referans Maslak Real Estate - Servislerimiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'QarantaBold';
+            src: local('Qaranta Bold'), local('Qaranta-Bold'),
+                 url('QarantaBold.woff2') format('woff2'),
+                 url('QarantaBold.woff') format('woff'),
+                 url('Qaranta Bold.otf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary-red: #e74c3c;
+            --primary-blue: #2c3e50;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --sahibinden-yellow: #FFD301;
+            --sahibinden-black: #000000;
+            --dark-bg: #121212;
+            --dark-text: #e0e0e0;
+            --dark-mode-active: #3498db;
+            --language-active: #3498db;
+            --language-text: #000000;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            background-color: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s;
+        }
+        body.dark-mode .top-bar { background-color: #1e1e1e; box-shadow: 0 2px 15px rgba(0,0,0,0.3); }
+
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+
+        .hamburger-container { display: flex; align-items: center; z-index: 1001; }
+        .hamburger-btn { background: none; border: none; cursor: pointer; padding: 10px; }
+        .hamburger-icon { font-size: 24px; color: var(--primary-blue); transition: all 0.3s ease; }
+        body.dark-mode .hamburger-icon { color: var(--dark-text); }
+
+        .logo-container {
+            display: flex; align-items: center; cursor: pointer;
+            margin-left: 10px; position: relative; z-index: 1001; transition: transform 0.4s ease;
+        }
+        .logo { height: 80px; max-width: 100%; object-fit: contain; }
+        .company-name { display: flex; flex-direction: column; margin-left: 15px; }
+        .company-name-main {
+            color: var(--primary-red);
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold; letter-spacing: 1px;
+            font-family: 'QarantaBold', Arial, sans-serif;
+            text-transform: uppercase;
+        }
+        .company-name-sub { color: var(--primary-blue); font-size: clamp(14px, 3vw, 18px); margin-top: 5px; }
+        body.dark-mode .company-name-sub { color: var(--dark-text) !important; }
+
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .action-buttons { display: flex; gap: 10px; }
+
+        .sahibinden-button {
+            display: inline-flex; align-items: center;
+            background-color: var(--sahibinden-yellow); color: var(--sahibinden-black);
+            border: none; border-radius: 8px; padding: 8px 12px;
+            font-weight: bold; font-size: 14px; transition: all 0.3s;
+            text-decoration: none; height: 38px;
+            box-shadow: 0 4px 8px rgba(255,211,1,0.3);
+        }
+        .sahibinden-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(255,211,1,0.4); }
+        .sahibinden-button i { margin-right: 6px; color: var(--sahibinden-black); font-weight: bold; font-style: normal; font-size: 21px; }
+
+        .action-button {
+            background-color: var(--primary-red); color: var(--white);
+            border: none; border-radius: 8px; padding: 8px 15px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 14px; font-weight: 600;
+            transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(231,76,60,0.3);
+            min-width: 100px; height: 38px; text-decoration: none;
+        }
+        .action-button i { margin-right: 6px; font-size: 14px; }
+        .action-button:hover { background-color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(231,76,60,0.4); }
+
+        /* ── SIDEBAR ── */
+        .sidebar-menu {
+            position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
+            background-color: var(--white);
+            box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+            z-index: 999; transition: all 0.4s ease;
+            overflow-y: auto; display: flex; flex-direction: column;
+            background-image: url('menubackground.png');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+        }
+        body.dark-mode .sidebar-menu { background-color: rgba(30,30,30,0.9); background-blend-mode: overlay; }
+        .sidebar-menu.open { left: 0; }
+
+        .menu-items { list-style: none; padding: 90px 0 0 0; margin: 0; flex-grow: 1; }
+        .menu-item { border-bottom: 1px solid rgba(245,245,245,0.2); }
+        body.dark-mode .menu-item { border-bottom-color: rgba(68,68,68,0.5); }
+        .menu-item:last-child { border-bottom: none; }
+
+        .menu-link {
+            display: block; padding: 15px 25px;
+            color: var(--primary-blue); text-decoration: none;
+            font-weight: 600; transition: all 0.3s ease; position: relative;
+            background-color: rgba(255,255,255,0.7); backdrop-filter: blur(5px);
+        }
+        body.dark-mode .menu-link { color: var(--dark-text); background-color: rgba(30,30,30,0.7); }
+        .menu-link:hover { color: var(--primary-red); background-color: rgba(245,245,245,0.9); padding-left: 30px; }
+        body.dark-mode .menu-link:hover { background-color: rgba(45,45,45,0.9); }
+        .menu-link:hover::before, .menu-link.active::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 4px; background-color: var(--primary-red);
+        }
+        .menu-link.active { color: var(--primary-red); }
+
+        .toggle-buttons-container {
+            padding: 15px; border-top: 1px solid rgba(245,245,245,0.2);
+            margin-top: auto; display: flex; flex-direction: column; gap: 15px;
+            background-color: rgba(255,255,255,0.7); backdrop-filter: blur(5px);
+        }
+        body.dark-mode .toggle-buttons-container { border-top-color: rgba(68,68,68,0.5); background-color: rgba(30,30,30,0.7); }
+
+        .language-toggle-button {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 15px; background-color: rgba(245,245,245,0.8);
+            border-radius: 8px; transition: all 0.3s;
+        }
+        body.dark-mode .language-toggle-button { background-color: rgba(45,45,45,0.8); }
+        .language-icon { font-family: 'Arial', sans-serif; font-weight: bold; font-size: 18px; color: var(--primary-blue); }
+        body.dark-mode .language-icon { color: var(--dark-text); }
+
+        .language-toggle-switch { position: relative; display: inline-block; width: 80px; height: 34px; }
+        .language-toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .language-slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
+        }
+        .language-slider:before {
+            position: absolute; content: "TR"; height: 26px; width: 36px;
+            left: 4px; bottom: 4px; background-color: white; transition: .4s;
+            border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: bold; color: var(--primary-blue);
+        }
+        input:checked + .language-slider { background-color: var(--language-active); }
+        input:checked + .language-slider:before { content: "EN"; transform: translateX(36px); color: var(--language-text); }
+
+        .dark-mode-toggle-button {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 15px; background-color: rgba(245,245,245,0.8); border-radius: 8px; transition: all 0.3s;
+        }
+        body.dark-mode .dark-mode-toggle-button { background-color: rgba(45,45,45,0.8); }
+
+        .dark-mode-icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; position: relative; }
+        .dark-mode-icon .sun-moon { position: absolute; width: 20px; height: 20px; border-radius: 50%; transition: all 0.3s ease; }
+        .dark-mode-icon .sun { background-color: #000000; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .dark-mode-icon .moon { background-color: transparent; box-shadow: -6px -6px 0 0 #ffffff inset; transform: scale(0.8); }
+        body.dark-mode .dark-mode-icon .sun { opacity: 0; transform: scale(0.5); }
+        body.dark-mode .dark-mode-icon .moon { opacity: 1; transform: scale(1); }
+
+        .toggle-switch { position: relative; display: inline-block; width: 80px; height: 34px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 26px; width: 26px;
+            left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--dark-mode-active); }
+        input:checked + .slider:before { transform: translateX(46px); }
+
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); z-index: 998;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        /* ── SERVICES PAGE STYLES ── */
+        .services-hero {
+            position: relative;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: var(--primary-blue);
+        }
+
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(44,62,80,0.92) 0%, rgba(44,62,80,0.6) 60%, rgba(44,62,80,0.2) 100%);
+            z-index: 1;
+        }
+
+        .hero-cloud-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .hero-cloud-img.loaded { opacity: 1; }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 60px;
+            max-width: 680px;
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary-red);
+            background: rgba(231,76,60,0.15);
+            border: 1px solid rgba(231,76,60,0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'QarantaBold', Arial, sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-title span {
+            color: var(--primary-red);
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.78);
+            line-height: 1.7;
+            max-width: 480px;
+        }
+
+        /* ── SERVICE CARDS ── */
+        .services-section {
+            padding: 70px 40px;
+            background-color: var(--light-gray);
+            transition: background-color 0.3s;
+        }
+        body.dark-mode .services-section { background-color: #181818; }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 32px 28px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s;
+            border-left: 4px solid transparent;
+            opacity: 0;
+            transform: translateY(24px);
+            animation: cardIn 0.5s ease forwards;
+        }
+
+        body.dark-mode .service-card { background: #242424; box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(231,76,60,0.15);
+            border-left-color: var(--primary-red);
+        }
+
+        .service-icon {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: rgba(231,76,60,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--primary-red);
+            transition: background 0.25s ease;
+        }
+        .service-card:hover .service-icon { background: rgba(231,76,60,0.18); }
+
+        .service-info { flex: 1; }
+
+        .service-title-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 6px;
+            line-height: 1.4;
+            transition: color 0.3s;
+        }
+        body.dark-mode .service-title-text { color: var(--dark-text); }
+
+        .service-desc {
+            font-size: 0.875rem;
+            color: #777;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+        body.dark-mode .service-desc { color: #999; }
+
+        /* staggered animation */
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .service-card:nth-child(1)  { animation-delay: 0.05s; }
+        .service-card:nth-child(2)  { animation-delay: 0.10s; }
+        .service-card:nth-child(3)  { animation-delay: 0.15s; }
+        .service-card:nth-child(4)  { animation-delay: 0.20s; }
+        .service-card:nth-child(5)  { animation-delay: 0.25s; }
+        .service-card:nth-child(6)  { animation-delay: 0.30s; }
+        .service-card:nth-child(7)  { animation-delay: 0.35s; }
+        .service-card:nth-child(8)  { animation-delay: 0.40s; }
+        .service-card:nth-child(9)  { animation-delay: 0.45s; }
+        .service-card:nth-child(10) { animation-delay: 0.50s; }
+        .service-card:nth-child(11) { animation-delay: 0.55s; }
+
+        /* Language visibility — controlled by class on body */
+        .lang-en { display: none !important; }
+        body.lang-en-active .lang-en { display: flex !important; }
+        body.lang-en-active .lang-tr { display: none !important; }
+        body.lang-en-active .hero-content .lang-en { display: block !important; }
+        body.lang-en-active .hero-content .lang-tr { display: none !important; }
+        body.lang-en-active .hero-eyebrow.lang-en { display: inline-block !important; }
+
+        /* ── FOOTER ── */
+        footer { background-color: var(--primary-blue); color: var(--white); padding: 30px 20px; text-align: center; }
+        .social-links { display: flex; justify-content: center; align-items: center; margin: 20px 0; flex-wrap: wrap; gap: 20px; }
+        .social-icon { color: var(--white); font-size: 28px; transition: color 0.3s; }
+        .social-icon:hover { color: var(--primary-red); }
+        .contact-info { margin: 20px 0; }
+        .contact-info h3 { font-size: 24px; margin-bottom: 10px; }
+        .contact-info p { margin: 8px 0; font-size: 16px; }
+        .copyright { margin-top: 20px; font-size: 0.8rem; color: #bdc3c7; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero-content { padding: 40px 24px; }
+            .services-section { padding: 40px 16px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; align-items: center; }
+            .logo-container { margin: 10px 0; text-align: center; transform: none !important; }
+            .header-right { width: 100%; justify-content: space-between; margin-top: 10px; }
+            .action-buttons { flex-grow: 1; justify-content: flex-start; }
+            .sidebar-menu { width: 250px; }
+            .hamburger-container { margin-right: 0; margin-left: 15px; }
+            .menu-items { padding: 90px 0 10px 0; }
+            .toggle-buttons-container { padding: 12px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <ul class="menu-items">
+            <li class="menu-item">
+                <a href="index.html" class="menu-link" data-tr="Ana Sayfa" data-en="Main Page">Ana Sayfa</a>
+            </li>
+            <li class="menu-item">
+                <a href="about.html" class="menu-link" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</a>
+            </li>
+            <li class="menu-item">
+                <a href="services.html" class="menu-link active" data-tr="Servislerimiz" data-en="Our Services">Servislerimiz</a>
+            </li>
+        </ul>
+
+        <!-- Toggle Buttons Container -->
+        <div class="toggle-buttons-container">
+            <div class="language-toggle-button">
+                <span class="language-icon">文A</span>
+                <label class="language-toggle-switch">
+                    <input type="checkbox" id="languageMenuToggle">
+                    <span class="language-slider"></span>
+                </label>
+            </div>
+            <div class="dark-mode-toggle-button">
+                <span class="dark-mode-icon">
+                    <div class="sun-moon sun"></div>
+                    <div class="sun-moon moon"></div>
+                </span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="header-content">
+            <div style="display:flex;align-items:center;">
+                <div class="hamburger-container">
+                    <button class="hamburger-btn" id="hamburgerBtn">
+                        <i class="fas fa-bars hamburger-icon"></i>
+                    </button>
+                </div>
+                <div class="logo-container" id="logoLink">
+                    <img src="Firmalogo.jpg" alt="Referans Maslak Logo" class="logo">
+                    <div class="company-name">
+                        <div class="company-name-main">REFERANS MASLAK</div>
+                        <div class="company-name-sub">Real Estate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="action-buttons">
+                    <a href="https://referansmaslak.sahibinden.com/" target="_blank" class="sahibinden-button">
+                        <i>S</i> sahibinden
+                    </a>
+                    <a href="tel:+905346270735" class="action-button" id="callButton">
+                        <i class="fas fa-phone-alt"></i> <span class="call-text">ARA</span>
+                    </a>
+                    <a href="https://maps.app.goo.gl/JvEdP2CgWucA9CLR9?g_st=aw" target="_blank" class="action-button" id="directionButton">
+                        <i class="fas fa-map-marked-alt"></i> <span class="direction-text">KONUM</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero with random word cloud -->
+    <section class="services-hero">
+        <img id="heroCloudImg" class="hero-cloud-img" src="" alt="Hizmetler kelime bulutu">
+        <div class="hero-content">
+            <span class="hero-eyebrow lang-tr">Neler Yapıyoruz</span>
+            <span class="hero-eyebrow lang-en">What We Do</span>
+            <h1 class="hero-title lang-tr">Gayrimenkul<br><span>Hizmetlerimiz</span></h1>
+            <h1 class="hero-title lang-en">Our Real Estate<br><span>Services</span></h1>
+            <p class="hero-subtitle lang-tr">
+                Konut ve ticari gayrimenkulden yabancı yatırımcılara özel danışmanlığa kadar geniş bir hizmet yelpazesiyle yanınızdayız.
+            </p>
+            <p class="hero-subtitle lang-en">
+                From residential and commercial real estate to specialized advisory for foreign investors — we're with you every step of the way.
+            </p>
+        </div>
+    </section>
+
+    <!-- Service Cards -->
+    <section class="services-section">
+        <div class="services-grid" id="servicesGrid">
+
+            <!-- TR cards (always in DOM, hidden via JS when EN) -->
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-home"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Konut ve Ticari Gayrimenkul Alım-Satım</div>
+                    <div class="service-desc">Her bütçeye ve profile uygun konut ve ticari mülk alım-satım işlemlerinde uçtan uca destek.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-key"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Kiralık Konut ve İş Yeri Temini</div>
+                    <div class="service-desc">İhtiyacınıza en uygun kiralık mülkü hızlı ve güvenilir biçimde bulmanızda yardımcı oluyoruz.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Gayrimenkul Piyasa Değerleme</div>
+                    <div class="service-desc">Güncel piyasa verilerine dayalı profesyonel değerleme analizi ile mülkünüzün gerçek değerini belirleyin.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Portföy Yönetimi ve Kira Takibi</div>
+                    <div class="service-desc">Mülk portföyünüzü büyütün; kira takibi, kiracı yönetimi ve gelir optimizasyonunu biz üstlenelim.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-file-contract"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Kira Sözleşmesi Yönetimi</div>
+                    <div class="service-desc">Yasal uyumlu sözleşme hazırlama, yenileme ve süreç takibi konularında tam destek.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-handshake"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Sorunlu Kiracı Müzakere İşlemleri</div>
+                    <div class="service-desc">Anlaşmazlık süreçlerinde arabuluculuk ve müzakere desteğiyle haklarınızı koruyun.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-landmark"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Tapu ve Resmi İşlem Takibi</div>
+                    <div class="service-desc">Tapu devri, ipotek ve diğer resmi işlemlerde eksiksiz takip ve yönlendirme hizmeti.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Yabancılara Özel Gayrimenkul Danışmanlığı</div>
+                    <div class="service-desc">Türkiye'de mülk edinmek isteyen yabancı yatırımcılara özel, çok dilli danışmanlık hizmeti.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-passport"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">TC Vatandaşlığı Alınması ve Süreç Takibi</div>
+                    <div class="service-desc">Gayrimenkul yatırımı yoluyla Türk vatandaşlığı başvuru sürecinin tüm adımlarını yönetiyoruz.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-id-card"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">İkametgâh İzni Alınması ve Süreç Takibi</div>
+                    <div class="service-desc">Türkiye'de ikamet izni başvurusunda gerekli belgeler ve resmi prosedür boyunca rehberlik.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-tr">
+                <div class="service-icon"><i class="fas fa-hard-hat"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">İnşaat ve Dekorasyon İşleri Takibi</div>
+                    <div class="service-desc">Mülkünüzdeki tadilat ve dekorasyon süreçlerini güvenilir ekiplerle koordineli biçimde yönetiyoruz.</div>
+                </div>
+            </div>
+
+            <!-- EN cards -->
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-home"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Residential & Commercial Sales</div>
+                    <div class="service-desc">End-to-end support for buying and selling residential and commercial properties for any budget or profile.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-key"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Rental Property Sourcing</div>
+                    <div class="service-desc">We find the right rental apartment or office space for your needs quickly and reliably.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Market Valuation</div>
+                    <div class="service-desc">Professional market-based valuation analysis to determine the true value of your property.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Portfolio & Rent Management</div>
+                    <div class="service-desc">Grow your property portfolio; we handle rent tracking, tenant management and income optimisation.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-file-contract"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Lease Agreement Management</div>
+                    <div class="service-desc">Full support for legally compliant contract drafting, renewal, and ongoing follow-up.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-handshake"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Tenant Dispute Mediation</div>
+                    <div class="service-desc">Mediation and negotiation support in dispute processes to protect your rights.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-landmark"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Title Deed & Official Procedures</div>
+                    <div class="service-desc">Complete follow-up and guidance for title transfers, mortgages and all official transactions.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Foreign Investor Advisory</div>
+                    <div class="service-desc">Dedicated multilingual consultancy for foreign nationals looking to acquire property in Turkey.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-passport"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Turkish Citizenship by Investment</div>
+                    <div class="service-desc">We manage every step of the citizenship-by-real-estate-investment application process.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-id-card"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Residence Permit Application</div>
+                    <div class="service-desc">Guidance on required documents and official procedures for Turkish residence permit applications.</div>
+                </div>
+            </div>
+
+            <div class="service-card lang-en">
+                <div class="service-icon"><i class="fas fa-hard-hat"></i></div>
+                <div class="service-info">
+                    <div class="service-title-text">Construction & Renovation Oversight</div>
+                    <div class="service-desc">Coordinated management of renovation and decoration projects at your property with trusted teams.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/referansmaslak.ersinsavci?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ersin-savci-091b9053/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+        <div class="contact-info">
+            <h3>Referans Maslak Real Estate</h3>
+            <p>Ağaoğlu Maslak 1453 Projesi T4b Blok No:62 Maslak/Sarıyer/İstanbul</p>
+            <p>info@referansmaslak.com</p>
+        </div>
+        <div class="copyright">
+            © <script>document.write(new Date().getFullYear())</script> Referans Maslak. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ── Disable right-click & F12 ──
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', function (e) {
+                if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
+                if (e.key === 'F12') e.preventDefault();
+            });
+
+            // ── Logo → ana sayfa ──
+            document.getElementById('logoLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+
+            // ── Random word-cloud image ──
+            const cloudImages = [
+                'projectcloud (1).jpg',
+                'projectcloud (2).jpg',
+                'projectcloud (3).jpg',
+                'projectcloud (4).jpg'
+            ];
+            const heroImg = document.getElementById('heroCloudImg');
+            const randomCloud = cloudImages[Math.floor(Math.random() * cloudImages.length)];
+            heroImg.src = randomCloud;
+            heroImg.onload = () => heroImg.classList.add('loaded');
+
+            // ── Hamburger ──
+            const hamburgerBtn  = document.getElementById('hamburgerBtn');
+            const sidebarMenu   = document.getElementById('sidebarMenu');
+            const menuOverlay   = document.getElementById('menuOverlay');
+            const menuLinks     = document.querySelectorAll('.menu-link');
+
+            hamburgerBtn.addEventListener('click', function () {
+                sidebarMenu.classList.toggle('open');
+                menuOverlay.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            menuOverlay.addEventListener('click', function () {
+                sidebarMenu.classList.remove('open');
+                this.classList.remove('active');
+                hamburgerBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            });
+
+            // Navigate on menu link click
+            menuLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    sidebarMenu.classList.remove('open');
+                    menuOverlay.classList.remove('active');
+                    hamburgerBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    if (href) {
+                        setTimeout(function() { window.location.href = href; }, 200);
+                    }
+                });
+            });
+
+            // ── Dark mode ──
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeIcon   = document.querySelector('.dark-mode-icon');
+
+            function applyDark(on) {
+                document.body.classList.toggle('dark-mode', on);
+                darkModeToggle.checked = on;
+                darkModeIcon.querySelector('.sun').style.opacity    = on ? '0'   : '1';
+                darkModeIcon.querySelector('.sun').style.transform  = on ? 'scale(0.5)' : 'scale(1)';
+                darkModeIcon.querySelector('.moon').style.opacity   = on ? '1'   : '0';
+                darkModeIcon.querySelector('.moon').style.transform = on ? 'scale(1)' : 'scale(0.8)';
+            }
+
+            applyDark(localStorage.getItem('darkMode') === 'enabled');
+
+            darkModeToggle.addEventListener('change', function () {
+                const on = this.checked;
+                localStorage.setItem('darkMode', on ? 'enabled' : 'disabled');
+                applyDark(on);
+            });
+
+            // ── Language ──
+            const languageMenuToggle  = document.getElementById('languageMenuToggle');
+            const callButtonText      = document.querySelector('.call-text');
+            const directionButtonText = document.querySelector('.direction-text');
+
+            function applyLang(lang) {
+                const isTr = lang === 'tr';
+
+                // menu item labels
+                menuLinks.forEach(link => link.textContent = link.getAttribute('data-' + lang));
+
+                // header buttons
+                callButtonText.textContent      = isTr ? 'ARA'   : 'CALL';
+                directionButtonText.textContent  = isTr ? 'KONUM' : 'DIRECTIONS';
+
+                // toggle all lang-tr / lang-en via body class (avoids inline style conflicts)
+                document.body.classList.toggle('lang-en-active', !isTr);
+            }
+
+            const savedLang = localStorage.getItem('language') || 'tr';
+            if (savedLang === 'en') {
+                languageMenuToggle.checked = true;
+                applyLang('en');
+            }
+
+            languageMenuToggle.addEventListener('change', function () {
+                const lang = this.checked ? 'en' : 'tr';
+                localStorage.setItem('language', lang);
+                applyLang(lang);
+            });
+        });
+    </script>
+</body>
+</html>
