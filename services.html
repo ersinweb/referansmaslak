@@ -231,17 +231,18 @@
             z-index: 1;
         }
 
-        .hero-cloud-img {
+        .hero-wordcloud {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0;
-            transition: opacity 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 40px;
+            opacity: 0.22;
         }
-        .hero-cloud-img.loaded { opacity: 1; }
+        .hero-wordcloud svg { width: 65%; max-width: 600px; height: auto; }
 
         .hero-content {
             position: relative;
@@ -481,9 +482,37 @@
         </div>
     </div>
 
-    <!-- Hero with random word cloud -->
+    <!-- Hero with SVG word cloud -->
     <section class="services-hero">
-        <img id="heroCloudImg" class="hero-cloud-img" src="" alt="Hizmetler kelime bulutu">
+        <div class="hero-wordcloud">
+            <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    .w { font-family: Arial, sans-serif; font-weight: 700; fill: #ffffff; cursor: default; }
+                </style>
+                <text class="w" x="340" y="112" font-size="42" text-anchor="middle">Ağaoğlu Maslak 1453</text>
+                <text class="w" x="230" y="160" font-size="28" text-anchor="middle">Vadi İstanbul</text>
+                <text class="w" x="490" y="158" font-size="24" text-anchor="middle">Skyland</text>
+                <text class="w" x="130" y="210" font-size="20" text-anchor="middle">Mashattan</text>
+                <text class="w" x="310" y="205" font-size="22" text-anchor="middle">Büyükyalı</text>
+                <text class="w" x="490" y="200" font-size="19" text-anchor="middle">Zorlu Center</text>
+                <text class="w" x="610" y="165" font-size="17" text-anchor="middle">Maslak 42</text>
+                <text class="w" x="80"  y="155" font-size="17" text-anchor="middle">Eclipse</text>
+                <text class="w" x="160" y="252" font-size="16" text-anchor="middle">Yedi Mavi</text>
+                <text class="w" x="340" y="248" font-size="15" text-anchor="middle">Ritz Carlton</text>
+                <text class="w" x="510" y="242" font-size="16" text-anchor="middle">Quasar</text>
+                <text class="w" x="80"  y="112" font-size="15" text-anchor="middle">Anthill</text>
+                <text class="w" x="600" y="110" font-size="14" text-anchor="middle">Emaar</text>
+                <text class="w" x="430" y="280" font-size="14" text-anchor="middle">Çiftçi Tower</text>
+                <text class="w" x="240" y="285" font-size="14" text-anchor="middle">İstanbloom</text>
+                <text class="w" x="95"  y="285" font-size="13" text-anchor="middle">Ulus Arya Evleri</text>
+                <text class="w" x="590" y="280" font-size="13" text-anchor="middle">RAMS Ayazağa</text>
+                <text class="w" x="300" y="68"  font-size="13" text-anchor="middle">Ağaoğlu My Home</text>
+                <text class="w" x="555" y="318" font-size="12" text-anchor="middle">Sinpaş Queen Bomonti</text>
+                <text class="w" x="165" y="318" font-size="12" text-anchor="middle">Bomonti Rotana Residences</text>
+                <text class="w" x="440" y="50"  font-size="12" text-anchor="middle">Maçka Armani Residences</text>
+                <text class="w" x="130" y="70"  font-size="12" text-anchor="middle">Maçka Residences</text>
+            </svg>
+        </div>
         <div class="hero-content">
             <span class="hero-eyebrow lang-tr">Neler Yapıyoruz</span>
             <span class="hero-eyebrow lang-en">What We Do</span>
@@ -718,18 +747,6 @@
                 e.preventDefault();
                 window.location.href = 'index.html';
             });
-
-            // ── Random word-cloud image ──
-            const cloudImages = [
-                'projectcloud (1).JPG',
-                'projectcloud (2).JPG',
-                'projectcloud (3).JPG',
-                'projectcloud (4).JPG'
-            ];
-            const heroImg = document.getElementById('heroCloudImg');
-            const randomCloud = cloudImages[Math.floor(Math.random() * cloudImages.length)];
-            heroImg.src = randomCloud;
-            heroImg.onload = () => heroImg.classList.add('loaded');
 
             // ── Hamburger ──
             const hamburgerBtn  = document.getElementById('hamburgerBtn');
