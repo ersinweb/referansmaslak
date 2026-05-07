@@ -906,32 +906,31 @@
             const gallery = document.getElementById('galleryContainer');
             const imageCount = 50;
             const extensions = ['jpg', 'jpeg', 'png', 'webp'];
-            const INITIAL_BATCH = 8;   // hemen yüklenecek
-            const BATCH_SIZE    = 6;   // her seferinde yüklenecek
-            
-            // Tüm numaraları karıştır
+            const INITIAL_BATCH = 8;
+            const BATCH_SIZE    = 6;
+
             const allNumbers = Array.from({length: imageCount}, (_, i) => i + 1);
             shuffleArray(allNumbers);
 
             let loadedCount = 0;
             let loading = false;
 
-            // IntersectionObserver: galerinin sonuna yaklaşınca daha fazla yükle
+            // Sentinel'i gallery'nin hemen arkasına ekle
             const sentinel = document.createElement('div');
             sentinel.id = 'gallery-sentinel';
             sentinel.style.height = '1px';
-            gallery.parentNode.insertBefore(sentinel, gallery.nextSibling);
+            gallery.after(sentinel);
+
+            // İlk 8'i hemen yükle, sonrasını scroll ile
+            loadNextBatch(INITIAL_BATCH);
 
             const observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && !loading && loadedCount < allNumbers.length) {
                     loadNextBatch();
                 }
-            }, { rootMargin: '400px' });
+            }, { rootMargin: '500px' });
 
             observer.observe(sentinel);
-
-            // İlk batch'i hemen başlat
-            loadNextBatch(INITIAL_BATCH);
 
             function loadNextBatch(count) {
                 if (loading || loadedCount >= allNumbers.length) return;
@@ -941,8 +940,7 @@
                 loadedCount += batch.length;
 
                 Promise.all(batch.map(num => loadImage(num))).then(images => {
-                    const loaded = images.filter(Boolean);
-                    loaded.forEach(imgData => {
+                    images.filter(Boolean).forEach(imgData => {
                         const container = document.createElement('div');
                         const ratio = imgData.img.naturalWidth / imgData.img.naturalHeight;
                         if (imgData.isPortrait) {
@@ -954,41 +952,33 @@
                         } else {
                             container.className = 'gallery-item';
                         }
-                        // Fade-in efekti
                         imgData.img.style.opacity = '0';
-                        imgData.img.style.transition = 'opacity 0.4s ease';
+                        imgData.img.style.transition = 'opacity 0.5s ease';
                         container.appendChild(imgData.img);
                         gallery.appendChild(container);
-                        // Kısa gecikme ile fade-in
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => { imgData.img.style.opacity = '1'; });
                         });
                     });
                     loading = false;
-                    // Eğer hâlâ sentinel görünüyorsa devam et
-                    if (loadedCount < allNumbers.length) observer.observe(sentinel);
                 });
             }
 
-            // Uzantı fallback ile resim yükle
             function loadImage(number) {
                 return new Promise(resolve => {
                     const img = new Image();
-                    img.loading = 'lazy';
                     let currentExt = 0;
-                    function tryExtension() {
+                    function tryNext() {
                         if (currentExt >= extensions.length) { resolve(null); return; }
-                        const ext = extensions[currentExt++];
-                        img.src = `Gorsel (${number}).${ext}`;
+                        img.src = `Gorsel (${number}).${extensions[currentExt++]}`;
                         img.alt = `Referans Maslak Proje ${number}`;
                     }
-                    img.onload = () => resolve({ img, isPortrait: img.naturalHeight > img.naturalWidth });
-                    img.onerror = tryExtension;
-                    tryExtension();
+                    img.onload  = () => resolve({ img, isPortrait: img.naturalHeight > img.naturalWidth });
+                    img.onerror = tryNext;
+                    tryNext();
                 });
             }
 
-            // Fisher-Yates shuffle
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
