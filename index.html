@@ -915,22 +915,21 @@
             let loadedCount = 0;
             let loading = false;
 
-            // Sentinel'i gallery'nin hemen arkasına ekle
             const sentinel = document.createElement('div');
             sentinel.id = 'gallery-sentinel';
             sentinel.style.height = '1px';
             gallery.after(sentinel);
 
-            // İlk 8'i hemen yükle, sonrasını scroll ile
-            loadNextBatch(INITIAL_BATCH);
-
             const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !loading && loadedCount < allNumbers.length) {
+                if (entries[0].isIntersecting) {
                     loadNextBatch();
                 }
-            }, { rootMargin: '500px' });
+            }, { rootMargin: '600px' });
 
             observer.observe(sentinel);
+
+            // İlk 8'i hemen yükle
+            loadNextBatch(INITIAL_BATCH);
 
             function loadNextBatch(count) {
                 if (loading || loadedCount >= allNumbers.length) return;
@@ -961,6 +960,13 @@
                         });
                     });
                     loading = false;
+
+                    // Batch bitti — sentinel hâlâ görünürse bir sonrakini başlat
+                    if (loadedCount < allNumbers.length) {
+                        const rect = sentinel.getBoundingClientRect();
+                        const inView = rect.top < window.innerHeight + 600;
+                        if (inView) loadNextBatch();
+                    }
                 });
             }
 
