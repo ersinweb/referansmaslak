@@ -902,70 +902,91 @@
                 }
             }
 
-            // ── Gallery with progressive + lazy loading ──
+            // Image gallery with perfect masonry layout
             const gallery = document.getElementById('galleryContainer');
             const imageCount = 50;
-            const extensions = ['jpg', 'jpeg', 'png', 'webp'];
-            const INITIAL_BATCH = 8;
-            const BATCH_SIZE    = 6;
 
-            const allNumbers = Array.from({length: imageCount}, (_, i) => i + 1);
-            shuffleArray(allNumbers);
+            Promise.all(
+                Array.from({length: imageCount}, (_, i) => i + 1).map(num => loadImage(num))
+            ).then(images => {
+                const loadedImages = images.filter(img => img !== null);
 
-            let loadedCount = 0;
-            let loading = false;
+                const portraitImages  = loadedImages.filter(img => img.isPortrait);
+                const landscapeImages = loadedImages.filter(img => !img.isPortrait);
 
-            const sentinel = document.createElement('div');
-            sentinel.id = 'gallery-sentinel';
-            sentinel.style.height = '1px';
-            gallery.after(sentinel);
+                const wideImages = landscapeImages.filter(img =>
+                    Math.abs(img.img.naturalWidth / img.img.naturalHeight - (16/9)) < 0.2
+                );
+                const otherLandscape = landscapeImages.filter(img =>
+                    Math.abs(img.img.naturalWidth / img.img.naturalHeight - (16/9)) >= 0.2
+                );
 
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    loadNextBatch();
-                }
-            }, { rootMargin: '600px' });
+                const largeCount = Math.floor(otherLandscape.length / 2);
 
-            observer.observe(sentinel);
+                shuffleArray(portraitImages);
+                shuffleArray(wideImages);
+                shuffleArray(otherLandscape);
 
-            // İlk 8'i hemen yükle
-            loadNextBatch(INITIAL_BATCH);
+                const imageElements = [];
 
-            function loadNextBatch(count) {
-                if (loading || loadedCount >= allNumbers.length) return;
-                loading = true;
-                const batchSize = count || BATCH_SIZE;
-                const batch = allNumbers.slice(loadedCount, loadedCount + batchSize);
-                loadedCount += batch.length;
+                wideImages.forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-wide';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                otherLandscape.slice(0, largeCount).forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-large';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                otherLandscape.slice(largeCount).forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
+                portraitImages.forEach(imgData => {
+                    const container = document.createElement('div');
+                    container.className = 'gallery-item img-tall';
+                    container.appendChild(imgData.img);
+                    imageElements.push(container);
+                });
 
-                Promise.all(batch.map(num => loadImage(num))).then(images => {
-                    images.filter(Boolean).forEach(imgData => {
-                        const container = document.createElement('div');
-                        const ratio = imgData.img.naturalWidth / imgData.img.naturalHeight;
-                        if (imgData.isPortrait) {
-                            container.className = 'gallery-item img-tall';
-                        } else if (Math.abs(ratio - (16/9)) < 0.2) {
-                            container.className = 'gallery-item img-wide';
-                        } else if (Math.random() > 0.5) {
-                            container.className = 'gallery-item img-large';
-                        } else {
-                            container.className = 'gallery-item';
+                shuffleArray(imageElements);
+                imageElements.forEach(item => gallery.appendChild(item));
+                setTimeout(optimizeLayout, 100);
+            });
+
+            function optimizeLayout() {
+                const items      = Array.from(document.querySelectorAll('.gallery-item'));
+                const grid       = document.querySelector('.gallery');
+                const gridStyles = window.getComputedStyle(grid);
+                const columnWidth = parseInt(gridStyles.gridTemplateColumns.split(' ')[0]);
+                const gap         = parseInt(gridStyles.gap);
+                const occupied    = new Set();
+
+                items.forEach(item => {
+                    const colSpan = (item.classList.contains('img-wide') || item.classList.contains('img-large')) ? 2 : 1;
+                    const rowSpan = (item.classList.contains('img-tall') || item.classList.contains('img-large')) ? 2 : 1;
+                    let placed = false;
+                    for (let row = 0; !placed; row++) {
+                        for (let col = 0; col < Math.floor(grid.clientWidth / (columnWidth + gap)); col++) {
+                            let canPlace = true;
+                            for (let r = row; r < row + rowSpan && canPlace; r++)
+                                for (let c = col; c < col + colSpan && canPlace; c++)
+                                    if (occupied.has(`${c},${r}`)) canPlace = false;
+                            if (canPlace) {
+                                item.style.gridColumn = `${col + 1} / span ${colSpan}`;
+                                item.style.gridRow    = `${row + 1} / span ${rowSpan}`;
+                                for (let r = row; r < row + rowSpan; r++)
+                                    for (let c = col; c < col + colSpan; c++)
+                                        occupied.add(`${c},${r}`);
+                                placed = true;
+                                break;
+                            }
                         }
-                        imgData.img.style.opacity = '0';
-                        imgData.img.style.transition = 'opacity 0.5s ease';
-                        container.appendChild(imgData.img);
-                        gallery.appendChild(container);
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => { imgData.img.style.opacity = '1'; });
-                        });
-                    });
-                    loading = false;
-
-                    // Batch bitti — sentinel hâlâ görünürse bir sonrakini başlat
-                    if (loadedCount < allNumbers.length) {
-                        const rect = sentinel.getBoundingClientRect();
-                        const inView = rect.top < window.innerHeight + 600;
-                        if (inView) loadNextBatch();
                     }
                 });
             }
@@ -973,15 +994,10 @@
             function loadImage(number) {
                 return new Promise(resolve => {
                     const img = new Image();
-                    let currentExt = 0;
-                    function tryNext() {
-                        if (currentExt >= extensions.length) { resolve(null); return; }
-                        img.src = `Gorsel (${number}).${extensions[currentExt++]}`;
-                        img.alt = `Referans Maslak Proje ${number}`;
-                    }
+                    img.src = `Gorsel (${number}).jpg`;
+                    img.alt = `Referans Maslak Proje ${number}`;
                     img.onload  = () => resolve({ img, isPortrait: img.naturalHeight > img.naturalWidth });
-                    img.onerror = tryNext;
-                    tryNext();
+                    img.onerror = () => resolve(null);
                 });
             }
 
