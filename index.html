@@ -11,7 +11,81 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referans Maslak Real Estate</title>
+    <title>Maslak Satılık ve Kiralık Residence | Referans Maslak</title>
+    <meta name="description" content="Maslak'ta satılık ve kiralık residence, daire ve ofis. Ağaoğlu Maslak 1453 içindeki ofisimizde 2018'den beri butik gayrimenkul danışmanlığı. 0534 627 07 35">
+    <link rel="canonical" href="https://referansmaslak.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:site_name" content="Referans Maslak Real Estate">
+    <meta property="og:title" content="Maslak Satılık ve Kiralık Residence | Referans Maslak">
+    <meta property="og:description" content="Maslak'ta satılık ve kiralık residence, daire ve ofis. Ağaoğlu Maslak 1453 içindeki ofisimizde 2018'den beri butik gayrimenkul danışmanlığı. 0534 627 07 35">
+    <meta property="og:url" content="https://referansmaslak.com/">
+    <meta property="og:image" content="https://referansmaslak.com/Firmalogo.jpg">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": "https://referansmaslak.com/#isletme",
+  "name": "Referans Maslak Real Estate",
+  "alternateName": "Ersin Savcı | Referans Maslak",
+  "url": "https://referansmaslak.com/",
+  "logo": "https://referansmaslak.com/Firmalogo.jpg",
+  "image": "https://referansmaslak.com/Firmalogo.jpg",
+  "telephone": "+905346270735",
+  "email": "info@referansmaslak.com",
+  "foundingDate": "2018-11-01",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Ağaoğlu Maslak 1453 Projesi T4b Blok No:62, Maslak",
+    "addressLocality": "Sarıyer",
+    "addressRegion": "İstanbul",
+    "postalCode": "34398",
+    "addressCountry": "TR"
+  },
+  "areaServed": [
+    "Maslak",
+    "Sarıyer",
+    "İstanbul"
+  ],
+  "knowsLanguage": [
+    "tr",
+    "en"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    }
+  ],
+  "hasMap": "https://maps.app.goo.gl/JvEdP2CgWucA9CLR9",
+  "founder": {
+    "@type": "Person",
+    "name": "Ersin Savcı",
+    "jobTitle": "Gayrimenkul Danışmanı",
+    "alumniOf": "İstanbul Teknik Üniversitesi",
+    "sameAs": [
+      "https://www.linkedin.com/in/ersin-savci-091b9053/"
+    ]
+  },
+  "sameAs": [
+    "https://www.instagram.com/referansmaslak.ersinsavci/",
+    "https://www.linkedin.com/in/ersin-savci-091b9053/",
+    "https://referansmaslak.sahibinden.com/"
+  ]
+}
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @font-face {
@@ -525,6 +599,59 @@
         }
         
         /* Gallery */
+        /* Intro (SEO) */
+        .intro {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 22px 20px 6px;
+            text-align: center;
+        }
+
+        .intro h1, .intro .intro-headline {
+            color: var(--primary-blue);
+            font-size: clamp(20px, 4.2vw, 30px);
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: clamp(15px, 2.6vw, 17px);
+            color: #555;
+            max-width: 760px;
+            margin: 0 auto 14px;
+        }
+
+        .intro-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .intro-links a {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .intro-links a:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .intro-lang { display: none; }
+        .intro-lang.active { display: block; }
+
+        body.dark-mode .intro h1, body.dark-mode .intro .intro-headline { color: var(--dark-text); }
+        body.dark-mode .intro p { color: #bbb; }
+        body.dark-mode .intro-links a { color: var(--dark-text); border-color: var(--dark-text); }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -662,6 +789,16 @@
                 padding: 12px 15px;
             }
         }
+        .footer-link {
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.35);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-red);
+            border-bottom-color: var(--primary-red);
+        }
     </style>
 </head>
 <body>
@@ -676,6 +813,9 @@
             </li>
             <li class="menu-item">
                 <a href="services.html" class="menu-link" data-tr="Servislerimiz" data-en="Our Services">Servislerimiz</a>
+            </li>
+            <li class="menu-item">
+                <a href="maslak-1453.html" class="menu-link" data-tr="Maslak 1453 Satılık & Kiralık" data-en="Maslak 1453 For Sale & Rent">Maslak 1453 Satılık &amp; Kiralık</a>
             </li>
         </ul>
         
@@ -745,6 +885,28 @@
         </div>
     </div>
     
+    <!-- Intro -->
+    <section class="intro">
+        <div id="intro-tr" class="intro-lang active">
+            <h1>Maslak'ta Satılık ve Kiralık Residence, Daire ve Ofis</h1>
+            <p>Referans Maslak, Ağaoğlu Maslak 1453 projesinin içindeki ofisinden 2018'den bu yana Maslak'ta butik gayrimenkul danışmanlığı veriyor. İTÜ İnşaat Mühendisi ve MBA Ersin Savcı ile satılık ve kiralık residence, daire, ofis ve ticari gayrimenkulde Türkçe ve İngilizce hizmet.</p>
+            <div class="intro-links">
+                <a href="maslak-1453.html">Maslak 1453 Satılık &amp; Kiralık</a>
+                <a href="services.html">Hizmetlerimiz</a>
+                <a href="https://wa.me/905346270735" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+        </div>
+        <div id="intro-en" class="intro-lang">
+            <p class="intro-headline"><strong>Residences, Apartments and Offices for Sale and Rent in Maslak, Istanbul</strong></p>
+            <p>Referans Maslak has provided boutique real estate advisory in Maslak since 2018 from its office inside the Ağaoğlu Maslak 1453 project. Work directly with Ersin Savcı, civil engineer (ITU) and MBA, in English or Turkish.</p>
+            <div class="intro-links">
+                <a href="maslak-1453.html">Maslak 1453 For Sale &amp; Rent</a>
+                <a href="services.html">Our Services</a>
+                <a href="https://wa.me/905346270735" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Gallery -->
     <div class="gallery" id="galleryContainer"></div>
     
@@ -762,7 +924,9 @@
         <div class="contact-info">
             <h3>Referans Maslak Real Estate</h3>
             <p>Ağaoğlu Maslak 1453 Projesi T4b Blok No:62 Maslak/Sarıyer/İstanbul</p>
-            <p>info@referansmaslak.com</p>
+            <p><a class="footer-link" href="tel:+905346270735">0534 627 07 35</a> · <a class="footer-link" href="https://wa.me/905346270735" target="_blank" rel="noopener">WhatsApp</a></p>
+            <p><a class="footer-link" href="mailto:info@referansmaslak.com">info@referansmaslak.com</a></p>
+            <p><a class="footer-link" href="maslak-1453.html">Ağaoğlu Maslak 1453 satılık ve kiralık daireler</a></p>
         </div>
         
         <div class="copyright">
@@ -887,6 +1051,10 @@
             });
             
             function updateLanguage(lang) {
+                // Intro text
+                document.getElementById('intro-tr').classList.toggle('active', lang === 'tr');
+                document.getElementById('intro-en').classList.toggle('active', lang === 'en');
+
                 // Update menu items
                 menuLinks.forEach(link => {
                     link.textContent = link.getAttribute(`data-${lang}`);
@@ -995,7 +1163,7 @@
                 return new Promise(resolve => {
                     const img = new Image();
                     img.src = `Gorsel (${number}).jpg`;
-                    img.alt = `Referans Maslak Proje ${number}`;
+                    img.alt = `Maslak residence ve şehir manzarası ${number} – Referans Maslak`;
                     img.onload  = () => resolve({ img, isPortrait: img.naturalHeight > img.naturalWidth });
                     img.onerror = () => resolve(null);
                 });
