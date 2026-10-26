@@ -625,6 +625,8 @@
 
         body.dark-mode .intro h1 { color: var(--dark-text); }
         body.dark-mode .intro p { color: #bbb; }
+        .intro p.intro-sign { color: var(--primary-blue); font-weight: 600; font-size: 15px; }
+        body.dark-mode .intro p.intro-sign { color: var(--dark-text); }
 
         .gallery {
             display: grid;
@@ -862,7 +864,8 @@
     <!-- Intro -->
     <section class="intro">
         <h1 id="introTitle" data-tr="Maslak'ta Satılık ve Kiralık Gayrimenkul Danışmanlığı" data-en="Real Estate Advisory in Maslak, Istanbul">Maslak'ta Satılık ve Kiralık Gayrimenkul Danışmanlığı</h1>
-        <p id="introText" data-tr="2018'den bu yana Maslak'a odaklanan butik bir gayrimenkul ofisiyiz. Alım, satım, kiralama ve yatırım süreçlerinizi İTÜ İnşaat Mühendisi ve MBA Ersin Savcı birebir yürütür; teknik değerlendirmeden tapu devrine kadar tek muhatabınız olur." data-en="A boutique real estate office focused on Maslak since 2018. Every purchase, sale, rental and investment is handled personally by Ersin Savcı, civil engineer (ITU) and MBA, from technical assessment to title deed transfer.">2018'den bu yana Maslak'a odaklanan butik bir gayrimenkul ofisiyiz. Alım, satım, kiralama ve yatırım süreçlerinizi İTÜ İnşaat Mühendisi ve MBA Ersin Savcı birebir yürütür; teknik değerlendirmeden tapu devrine kadar tek muhatabınız olur.</p>
+        <p id="introText" data-tr="İnşaat sektöründeki 15 yıllık deneyimimi 2018'de gayrimenkul danışmanlığına taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, Maslak ve İstanbul ağırlıklı olmak üzere Türkiye genelinde konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerini birebir yürütüyorum. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır." data-en="I brought 15 years of experience in the construction industry to real estate advisory in 2018 and founded Referans Maslak. From our office in Ağaoğlu Maslak 1453, I personally manage purchases, sales, rentals and investments of homes, residences and offices across Turkey, with a focus on Maslak and Istanbul. To me, every property is a project and every client a long-term business partner.">İnşaat sektöründeki 15 yıllık deneyimimi 2018'de gayrimenkul danışmanlığına taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, Maslak ve İstanbul ağırlıklı olmak üzere Türkiye genelinde konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerini birebir yürütüyorum. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır.</p>
+        <p id="introSign" class="intro-sign" data-tr="Ersin Savcı · İTÜ İnşaat Mühendisi, MBA" data-en="Ersin Savcı · Civil Engineer (ITU), MBA">Ersin Savcı · İTÜ İnşaat Mühendisi, MBA</p>
     </section>
 
     <!-- Gallery -->
@@ -1009,7 +1012,7 @@
             
             function updateLanguage(lang) {
                 // Intro text
-                ['introTitle', 'introText'].forEach(id => {
+                ['introTitle', 'introText', 'introSign'].forEach(id => {
                     const el = document.getElementById(id);
                     el.textContent = el.getAttribute(`data-${lang}`);
                 });
