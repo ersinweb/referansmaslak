@@ -12,7 +12,7 @@
   var KEY = 'rm_consent'; // 'granted' | 'denied'
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
-  function lang() { return store('language') === 'en' ? 'en' : 'tr'; }
+  function lang() { if (document.documentElement.lang === 'en') return 'en'; return store('language') === 'en' ? 'en' : 'tr'; }
   function track(name, params) { if (typeof window.gtag === 'function') window.gtag('event', name, params || {}); }
 
   /* ---------- Clarity ---------- */
