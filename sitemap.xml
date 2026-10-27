@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://referansmaslak.com/</loc><lastmod>2026-10-26</lastmod></url>
-  <url><loc>https://referansmaslak.com/maslak-1453.html</loc><lastmod>2026-10-26</lastmod></url>
-  <url><loc>https://referansmaslak.com/services.html</loc><lastmod>2026-10-26</lastmod></url>
-  <url><loc>https://referansmaslak.com/about.html</loc><lastmod>2026-10-26</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://referansmaslak.com/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://referansmaslak.com/maslak-1453.html</loc><lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://referansmaslak.com/maslak-1453.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://referansmaslak.com/maslak-1453-en.html"/>
+  </url>
+  <url><loc>https://referansmaslak.com/maslak-1453-en.html</loc><lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://referansmaslak.com/maslak-1453.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://referansmaslak.com/maslak-1453-en.html"/>
+  </url>
+  <url><loc>https://referansmaslak.com/services.html</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://referansmaslak.com/about.html</loc><lastmod>2026-10-27</lastmod></url>
 </urlset>
