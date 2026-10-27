@@ -628,6 +628,39 @@
         .intro p.intro-sign { color: var(--primary-blue); font-weight: 600; font-size: 15px; }
         body.dark-mode .intro p.intro-sign { color: var(--dark-text); }
 
+        .projects {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 6px 20px 22px;
+            text-align: center;
+        }
+        .projects h2 {
+            color: var(--primary-blue);
+            font-size: clamp(16px, 3vw, 19px);
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .project-tags {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding: 0;
+            margin: 0;
+        }
+        .project-tags li {
+            font-size: 14px;
+            color: var(--primary-blue);
+            border: 1px solid rgba(44, 62, 80, 0.25);
+            border-radius: 999px;
+            padding: 6px 14px;
+            background: rgba(44, 62, 80, 0.04);
+            white-space: nowrap;
+        }
+        body.dark-mode .projects h2 { color: var(--dark-text); }
+        body.dark-mode .project-tags li { color: var(--dark-text); border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -863,9 +896,36 @@
     
     <!-- Intro -->
     <section class="intro">
-        <h1 id="introTitle" data-tr="Maslak'ta Satılık ve Kiralık Gayrimenkul Danışmanlığı" data-en="Real Estate Advisory in Maslak, Istanbul">Maslak'ta Satılık ve Kiralık Gayrimenkul Danışmanlığı</h1>
+        <h1 id="introTitle" data-tr="Maslak ve İstanbul'da Satılık ve Kiralık Residence, Daire ve Ofis" data-en="Residences, Apartments and Offices for Sale and Rent in Maslak and Istanbul">Maslak ve İstanbul'da Satılık ve Kiralık Residence, Daire ve Ofis</h1>
         <p id="introText" data-tr="İnşaat sektöründeki 15 yıllık deneyimimi 2018 yılında gayrimenkul sektörüne taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır." data-en="I brought 15 years of experience in the construction industry into real estate in 2018 and founded Referans Maslak. From our office in Ağaoğlu Maslak 1453, we manage your purchases, sales, rentals and investments in luxury homes, residences and offices across Turkey, with a focus on Maslak and Istanbul. To me, every property is a project and every client a long-term business partner.">İnşaat sektöründeki 15 yıllık deneyimimi 2018 yılında gayrimenkul sektörüne taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır.</p>
         <p id="introSign" class="intro-sign" data-tr="Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA" data-en="Ersin SAVCI | Real Estate Broker | Civil Engineer | MBA">Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA</p>
+    </section>
+
+    <section class="projects" aria-labelledby="projectsTitle">
+        <h2 id="projectsTitle" data-tr="Çalıştığımız Projeler" data-en="Projects We Work In">Çalıştığımız Projeler</h2>
+        <ul class="project-tags">
+            <li>Ağaoğlu Maslak 1453</li>
+            <li>Skyland</li>
+            <li>Maslak 42</li>
+            <li>Vadi İstanbul</li>
+            <li>Mashattan</li>
+            <li>Ağaoğlu My Home</li>
+            <li>Eclipse</li>
+            <li>Anthill</li>
+            <li>Büyükyalı</li>
+            <li>Yedi Mavi</li>
+            <li>Sinpaş Queen Bomonti</li>
+            <li>Ritz-Carlton Residences</li>
+            <li>Zorlu Center</li>
+            <li>Çiftçi Towers</li>
+            <li>İstanbloom</li>
+            <li>Ulus Arya Evleri</li>
+            <li>Bomonti Rotana Residences</li>
+            <li>Maçka Armani Residences</li>
+            <li>Quasar İstanbul</li>
+            <li>Emaar</li>
+            <li>RAMS Ayazağa</li>
+        </ul>
     </section>
 
     <!-- Gallery -->
@@ -1012,7 +1072,7 @@
             
             function updateLanguage(lang) {
                 // Intro text
-                ['introTitle', 'introText', 'introSign'].forEach(id => {
+                ['introTitle', 'introText', 'introSign', 'projectsTitle'].forEach(id => {
                     const el = document.getElementById(id);
                     el.textContent = el.getAttribute(`data-${lang}`);
                 });
