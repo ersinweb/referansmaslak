@@ -625,6 +625,9 @@
 
         body.dark-mode .intro h1 { color: var(--dark-text); }
         body.dark-mode .intro p { color: #bbb; }
+        @media (max-width: 700px) { .intro .br-desk { display: none; } }
+        .intro .brand { white-space: nowrap; font-weight: 700; color: var(--primary-blue); }
+        body.dark-mode .intro .brand { color: var(--dark-text); }
         .intro p.intro-sign { color: var(--primary-blue); font-weight: 600; font-size: 15px; }
         body.dark-mode .intro p.intro-sign { color: var(--dark-text); }
 
@@ -897,7 +900,7 @@
     <!-- Intro -->
     <section class="intro">
         <h1 id="introTitle" data-tr="Maslak ve İstanbul'da Satılık ve Kiralık Residence, Daire ve Ofis" data-en="Residences, Apartments and Offices for Sale and Rent in Maslak and Istanbul">Maslak ve İstanbul'da Satılık ve Kiralık Residence, Daire ve Ofis</h1>
-        <p id="introText" data-tr="İnşaat sektöründeki 15 yıllık deneyimimi 2018 yılında gayrimenkul sektörüne taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır." data-en="I brought 15 years of experience in the construction industry into real estate in 2018 and founded Referans Maslak. From our office in Ağaoğlu Maslak 1453, we manage your purchases, sales, rentals and investments in luxury homes, residences and offices across Turkey, with a focus on Maslak and Istanbul. To me, every property is a project and every client a long-term business partner.">İnşaat sektöründeki 15 yıllık deneyimimi 2018 yılında gayrimenkul sektörüne taşıyarak Referans Maslak'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır.</p>
+        <p id="introText" data-tr="İnşaat sektöründeki 15 yıllık yöneticilik tecrübemi 2018 yılında gayrimenkul sektörüne taşıyarak &lt;br class=&quot;br-desk&quot;&gt;&lt;strong class=&quot;brand&quot;&gt;Referans Maslak&lt;/strong&gt;'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır." data-en="I brought 15 years of management experience in the construction industry into real estate in 2018 and founded &lt;br class=&quot;br-desk&quot;&gt;&lt;strong class=&quot;brand&quot;&gt;Referans Maslak&lt;/strong&gt;. From our office in Ağaoğlu Maslak 1453, we manage your purchases, sales, rentals and investments in luxury homes, residences and offices across Turkey, with a focus on Maslak and Istanbul. To me, every property is a project and every client a long-term business partner.">İnşaat sektöründeki 15 yıllık yöneticilik tecrübemi 2018 yılında gayrimenkul sektörüne taşıyarak <br class="br-desk"><strong class="brand">Referans Maslak</strong>'ı kurdum. Ağaoğlu Maslak 1453'teki ofisimizden, başta Maslak ve İstanbul olmak üzere tüm Türkiye genelinde lüks konut, residence ve ofis alım, satım, kiralama ve yatırım süreçlerinizi yönetiyoruz. Benim için her portföy bir proje, her müşteri uzun vadeli bir iş ortağıdır.</p>
         <p id="introSign" class="intro-sign" data-tr="Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA" data-en="Ersin SAVCI | Real Estate Broker | Civil Engineer | MBA">Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA</p>
     </section>
 
@@ -1074,7 +1077,8 @@
                 // Intro text
                 ['introTitle', 'introText', 'introSign', 'projectsTitle'].forEach(id => {
                     const el = document.getElementById(id);
-                    el.textContent = el.getAttribute(`data-${lang}`);
+                    if (id === 'introText') el.innerHTML = el.getAttribute(`data-${lang}`);
+                    else el.textContent = el.getAttribute(`data-${lang}`);
                 });
 
                 // Update menu items
