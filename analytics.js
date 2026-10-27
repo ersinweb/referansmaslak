@@ -7,7 +7,7 @@
   'use strict';
 
   // Clarity proje kodu (clarity.microsoft.com → Settings → Overview → Project ID). Boşsa Clarity yüklenmez.
-  var CLARITY_ID = '';
+  var CLARITY_ID = 'z4danjqq20';
 
   var KEY = 'rm_consent'; // 'granted' | 'denied'
 
