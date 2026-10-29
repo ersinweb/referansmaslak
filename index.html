@@ -726,6 +726,10 @@
             scrollbar-width: none;
         }
         .reviews-track::-webkit-scrollbar { display: none; }
+        /* Havuzdan sadece 3 yorum görünür; JS her açılışta rastgele 3 seçer, JS yoksa ilk 3 görünür */
+        .reviews-track .review-card { display: none; }
+        .reviews-track:not(.is-picked) .review-card:nth-child(-n+3),
+        .reviews-track.is-picked .review-card.is-shown { display: flex; }
         .review-card {
             flex: 0 0 calc((100% - 28px) / 3);
             scroll-snap-align: start;
@@ -1034,9 +1038,11 @@
         <p id="introSign" class="intro-sign" data-tr="Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA" data-en="Ersin SAVCI | Real Estate Broker | Civil Engineer | MBA">Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA</p>
     </section>
 
-    <!-- Google Yorumları
-         Yeni yorum eklemek için aşağıdaki <li class="review-card"> bloklarından birini kopyalayın;
-         yorum metnini Google'daki haliyle (orijinal dilinde) yapıştırın, isim "Ad S." şeklinde. En yeni yorum en üste. -->
+    <!-- Google Yorumları — SEÇİLMİŞ HAVUZ
+         Aşağıdaki listede seçilmiş yorumların tamamı durur; sayfa her açıldığında içlerinden rastgele 3 tanesi gösterilir.
+         Yorum eklemek için bir <li class="review-card"> bloğunu kopyalayın, metni Google'daki haliyle yapıştırın, isim "Ad S." şeklinde.
+         Sıranın önemi yok. -->
+
     <section class="reviews" aria-labelledby="reviewsTitle">
         <h2 id="reviewsTitle" data-tr="Müşterilerimiz Ne Diyor?" data-en="What Our Clients Say">Müşterilerimiz Ne Diyor?</h2>
         <p class="reviews-sub"><span class="g-stars" aria-hidden="true">★★★★★</span> <span id="reviewsSub" data-tr="Google yorumlarından" data-en="From our Google reviews">Google yorumlarından</span></p>
@@ -1267,6 +1273,16 @@
                 const prev = document.getElementById('reviewsPrev');
                 const next = document.getElementById('reviewsNext');
                 if (!track) return;
+
+                // Havuzdan rastgele 3 yorum seç (Fisher–Yates), seçilenleri öne al
+                const pool = Array.from(track.querySelectorAll('.review-card'));
+                for (let i = pool.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [pool[i], pool[j]] = [pool[j], pool[i]];
+                }
+                pool.slice(0, 3).forEach(card => { card.classList.add('is-shown'); track.prepend(card); });
+                track.classList.add('is-picked');
+
                 const step = () => {
                     const card = track.querySelector('.review-card');
                     return card ? card.getBoundingClientRect().width + 14 : track.clientWidth;
