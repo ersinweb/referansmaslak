@@ -706,6 +706,106 @@
         body.dark-mode .projects h2 { color: var(--dark-text); }
         body.dark-mode .project-tags li { color: var(--dark-text); border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
 
+        /* Google yorumları (statik karusel) */
+        .reviews {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 6px 20px 24px;
+            text-align: center;
+        }
+        .reviews h2 {
+            color: var(--primary-blue);
+            font-size: clamp(16px, 3vw, 19px);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .reviews-sub {
+            font-size: 13px;
+            color: #777;
+            margin: 0 0 14px;
+        }
+        .reviews-sub .g-stars { color: #f5a623; letter-spacing: 1px; }
+        .reviews-viewport { position: relative; }
+        .reviews-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 4px 2px 10px;
+            margin: 0;
+            list-style: none;
+            scrollbar-width: none;
+        }
+        .reviews-track::-webkit-scrollbar { display: none; }
+        .review-card {
+            flex: 0 0 calc((100% - 28px) / 3);
+            scroll-snap-align: start;
+            text-align: left;
+            border: 1px solid rgba(44, 62, 80, 0.15);
+            border-radius: 12px;
+            background: rgba(44, 62, 80, 0.03);
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .review-stars { color: #f5a623; font-size: 15px; letter-spacing: 2px; }
+        .review-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+            margin: 0;
+            flex: 1;
+        }
+        .review-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin: 0;
+        }
+        .review-author span { font-weight: 400; color: #888; font-size: 12px; }
+        .reviews-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(44, 62, 80, 0.2);
+            background: var(--white);
+            color: var(--primary-blue);
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .reviews-nav.prev { left: -14px; }
+        .reviews-nav.next { right: -14px; }
+        .reviews-nav[hidden] { display: none; }
+        .reviews-all {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.35);
+        }
+        .reviews-all:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+        body.dark-mode .reviews h2 { color: var(--dark-text); }
+        body.dark-mode .reviews-sub { color: #aaa; }
+        body.dark-mode .review-card { border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.04); }
+        body.dark-mode .review-text { color: #ccc; }
+        body.dark-mode .review-author { color: var(--dark-text); }
+        body.dark-mode .reviews-nav { background: #1e1e1e; color: var(--dark-text); border-color: rgba(255, 255, 255, 0.2); }
+        body.dark-mode .reviews-all { color: var(--dark-text); border-bottom-color: rgba(255, 255, 255, 0.35); }
+        @media (max-width: 860px) { .review-card { flex-basis: calc((100% - 14px) / 2); } }
+        @media (max-width: 560px) {
+            .review-card { flex-basis: 86%; }
+            .reviews-nav { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) { .reviews-track { scroll-behavior: auto; } }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -980,6 +1080,36 @@
         </ul>
     </section>
 
+    <!-- Google Yorumları
+         Yeni yorum eklemek için aşağıdaki <li class="review-card"> bloklarından birini kopyalayın;
+         yorum metnini Google'daki haliyle (orijinal dilinde) yapıştırın, isim "Ad S." şeklinde. En yeni yorum en üste. -->
+    <section class="reviews" aria-labelledby="reviewsTitle">
+        <h2 id="reviewsTitle" data-tr="Müşterilerimiz Ne Diyor?" data-en="What Our Clients Say">Müşterilerimiz Ne Diyor?</h2>
+        <p class="reviews-sub"><span class="g-stars" aria-hidden="true">★★★★★</span> <span id="reviewsSub" data-tr="Google yorumlarından" data-en="From our Google reviews">Google yorumlarından</span></p>
+        <div class="reviews-viewport">
+            <button type="button" class="reviews-nav prev" id="reviewsPrev" aria-label="Önceki yorum" hidden>&#8249;</button>
+            <ul class="reviews-track" id="reviewsTrack">
+                <li class="review-card">
+                    <div class="review-stars" aria-label="5 yıldız">★★★★★</div>
+                    <p class="review-text">6 ay boyunca otelde yaşadım, bir türlü ev bulamıyordum. Ersin Bey sayesinde 3 günde buldum. İlgisi ve samimiyeti için çok teşekkür ederim, herkese tavsiye ederim.</p>
+                    <p class="review-author">Çınar İ. <span>· Google</span></p>
+                </li>
+                <li class="review-card">
+                    <div class="review-stars" aria-label="5 yıldız">★★★★★</div>
+                    <p class="review-text">Oldukça kurumsal, çalışan, işini ciddiyetle yapan, eğitimli, düzeyli, kibar aynı zamanda oldukça ilgili ve titiz çalışan bir gayrimenkul uzmanı.</p>
+                    <p class="review-author">Aydan D. <span>· Google</span></p>
+                </li>
+                <li class="review-card">
+                    <div class="review-stars" aria-label="5 yıldız">★★★★★</div>
+                    <p class="review-text">İsteğinize uygun, alternatifli, kullanıma ve ihtiyaca uygun yönlendirme alabilirsiniz. Güven veren, pozitif ve yapıcı bir deneyim oluşuyor.</p>
+                    <p class="review-author">Elif K. <span>· Google</span></p>
+                </li>
+            </ul>
+            <button type="button" class="reviews-nav next" id="reviewsNext" aria-label="Sonraki yorum" hidden>&#8250;</button>
+        </div>
+        <a class="reviews-all" id="reviewsAll" href="https://www.google.com/maps?cid=17066031900633594533" target="_blank" rel="noopener" data-tr="Tüm yorumları Google'da görün →" data-en="See all reviews on Google →">Tüm yorumları Google'da görün →</a>
+    </section>
+
     <!-- Gallery -->
     <div class="gallery" id="galleryContainer"></div>
     
@@ -1124,7 +1254,7 @@
             
             function updateLanguage(lang) {
                 // Intro text
-                ['introTitle', 'introText', 'introSign', 'ownerTitle', 'ownerText', 'ownerCta', 'projectsTitle'].forEach(id => {
+                ['introTitle', 'introText', 'introSign', 'ownerTitle', 'ownerText', 'ownerCta', 'projectsTitle', 'reviewsTitle', 'reviewsSub', 'reviewsAll'].forEach(id => {
                     const el = document.getElementById(id);
                     if (id === 'introText' || id === 'ownerText') el.innerHTML = el.getAttribute(`data-${lang}`);
                     else el.textContent = el.getAttribute(`data-${lang}`);
@@ -1144,6 +1274,40 @@
                     directionButtonText.textContent = 'DIRECTIONS';
                 }
             }
+
+            // Google yorumları karuseli: oklar sadece taşma varsa görünür, 7 sn'de bir otomatik kayar
+            (function initReviews() {
+                const track = document.getElementById('reviewsTrack');
+                const prev = document.getElementById('reviewsPrev');
+                const next = document.getElementById('reviewsNext');
+                if (!track) return;
+                const step = () => {
+                    const card = track.querySelector('.review-card');
+                    return card ? card.getBoundingClientRect().width + 14 : track.clientWidth;
+                };
+                const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+                const updateNav = () => {
+                    const overflow = track.scrollWidth > track.clientWidth + 4;
+                    prev.hidden = !overflow || track.scrollLeft <= 4;
+                    next.hidden = !overflow || atEnd();
+                };
+                prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+                next.addEventListener('click', () => track.scrollBy({ left: step() }));
+                track.addEventListener('scroll', updateNav, { passive: true });
+                window.addEventListener('resize', updateNav);
+                updateNav();
+
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (reduceMotion) return;
+                let paused = false;
+                ['mouseenter', 'touchstart', 'focusin'].forEach(ev => track.addEventListener(ev, () => { paused = true; }, { passive: true }));
+                ['mouseleave', 'focusout'].forEach(ev => track.addEventListener(ev, () => { paused = false; }));
+                setInterval(() => {
+                    if (paused || document.hidden || track.scrollWidth <= track.clientWidth + 4) return;
+                    if (atEnd()) track.scrollTo({ left: 0 });
+                    else track.scrollBy({ left: step() });
+                }, 7000);
+            })();
 
             // Image gallery with perfect masonry layout
             const gallery = document.getElementById('galleryContainer');
