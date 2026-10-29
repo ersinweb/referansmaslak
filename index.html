@@ -629,7 +629,6 @@
             line-height: 1.6;
         }
 
-
         body.dark-mode .intro h1 { color: var(--dark-text); }
         body.dark-mode .intro p { color: #bbb; }
         @media (max-width: 700px) { .intro .br-desk { display: none; } }
@@ -656,23 +655,12 @@
             color: #555;
             font-size: 15px;
             line-height: 1.6;
-            margin: 0 0 14px;
+            margin: 0;
         }
-        .owner-cta {
-            display: inline-block;
-            background-color: var(--primary-red);
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            padding: 10px 18px;
-            border-radius: 8px;
-        }
-        .owner-cta:hover { opacity: 0.9; }
         body.dark-mode .owners { border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.04); }
         body.dark-mode .owners h2 { color: var(--dark-text); }
         body.dark-mode .owners p { color: #bbb; }
-        @media (max-width: 480px) { .owners { margin: 6px 16px 18px; padding: 16px; } .owner-cta { display: block; } }
+        @media (max-width: 480px) { .owners { margin: 6px 16px 18px; padding: 16px; } }
         .projects {
             max-width: 980px;
             margin: 0 auto;
@@ -1046,40 +1034,6 @@
         <p id="introSign" class="intro-sign" data-tr="Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA" data-en="Ersin SAVCI | Real Estate Broker | Civil Engineer | MBA">Ersin SAVCI | Gayrimenkul Brokerı | İnşaat Mühendisi | MBA</p>
     </section>
 
-
-    <section class="owners" aria-labelledby="ownerTitle">
-        <h2 id="ownerTitle" data-tr="Mülkünüzü satmak veya kiraya vermek mi istiyorsunuz?" data-en="Looking to sell or rent out your property?">Mülkünüzü satmak veya kiraya vermek mi istiyorsunuz?</h2>
-        <p id="ownerText" data-tr="Maslak'ta dairenizi, residence'ınızı veya ofisinizi güncel piyasa verilerine dayalı bir değerlemeyle fiyatlıyor, profesyonel ilanla doğru alıcı ya da kiracıyla buluşturuyoruz. Türk alıcıların yanı sıra Maslak'ta yaşayan ve yatırım yapan &lt;strong&gt;yabancı müşterilerle&lt;/strong&gt; de çalıştığımız için mülkünüz daha geniş bir kitleye ulaşır. Kiralamada sözleşme, kira takibi ve kiracı yönetimini de üstlenebiliyoruz." data-en="We price your apartment, residence or office in Maslak with a valuation based on current market data, and match it with the right buyer or tenant through professional listings. Because we work with &lt;strong&gt;foreign clients&lt;/strong&gt; living and investing in Maslak as well as Turkish buyers, your property reaches a wider audience. For rentals, we can also handle the contract, rent collection and tenant management.">Maslak'ta dairenizi, residence'ınızı veya ofisinizi güncel piyasa verilerine dayalı bir değerlemeyle fiyatlıyor, profesyonel ilanla doğru alıcı ya da kiracıyla buluşturuyoruz. Türk alıcıların yanı sıra Maslak'ta yaşayan ve yatırım yapan <strong>yabancı müşterilerle</strong> de çalıştığımız için mülkünüz daha geniş bir kitleye ulaşır. Kiralamada sözleşme, kira takibi ve kiracı yönetimini de üstlenebiliyoruz.</p>
-        <a href="tel:+905346270735" class="owner-cta" id="ownerCta" data-tr="Değerleme ve görüşme için arayın: 0534 627 07 35" data-en="Call to discuss your property: +90 534 627 07 35">Değerleme ve görüşme için arayın: 0534 627 07 35</a>
-    </section>
-
-    <section class="projects" aria-labelledby="projectsTitle">
-        <h2 id="projectsTitle" data-tr="Çalıştığımız Projeler" data-en="Projects We Work In">Çalıştığımız Projeler</h2>
-        <ul class="project-tags">
-            <li>Ağaoğlu Maslak 1453</li>
-            <li>Skyland</li>
-            <li>Maslak 42</li>
-            <li>Vadi İstanbul</li>
-            <li>Mashattan</li>
-            <li>Ağaoğlu My Home</li>
-            <li>Eclipse</li>
-            <li>Anthill</li>
-            <li>Büyükyalı</li>
-            <li>Yedi Mavi</li>
-            <li>Sinpaş Queen Bomonti</li>
-            <li>Ritz-Carlton Residences</li>
-            <li>Zorlu Center</li>
-            <li>Çiftçi Towers</li>
-            <li>İstanbloom</li>
-            <li>Ulus Arya Evleri</li>
-            <li>Bomonti Rotana Residences</li>
-            <li>Maçka Armani Residences</li>
-            <li>Quasar İstanbul</li>
-            <li>Emaar</li>
-            <li>RAMS Ayazağa</li>
-        </ul>
-    </section>
-
     <!-- Google Yorumları
          Yeni yorum eklemek için aşağıdaki <li class="review-card"> bloklarından birini kopyalayın;
          yorum metnini Google'daki haliyle (orijinal dilinde) yapıştırın, isim "Ad S." şeklinde. En yeni yorum en üste. -->
@@ -1108,6 +1062,38 @@
             <button type="button" class="reviews-nav next" id="reviewsNext" aria-label="Sonraki yorum" hidden>&#8250;</button>
         </div>
         <a class="reviews-all" id="reviewsAll" href="https://www.google.com/maps?cid=17066031900633594533" target="_blank" rel="noopener" data-tr="Tüm yorumları Google'da görün →" data-en="See all reviews on Google →">Tüm yorumları Google'da görün →</a>
+    </section>
+
+    <section class="owners" aria-labelledby="ownerTitle">
+        <h2 id="ownerTitle" data-tr="Mülkünüzü satmak veya kiraya vermek mi istiyorsunuz?" data-en="Looking to sell or rent out your property?">Mülkünüzü satmak veya kiraya vermek mi istiyorsunuz?</h2>
+        <p id="ownerText" data-tr="Maslak'ta dairenizi, residence'ınızı veya ofisinizi güncel piyasa verilerine dayalı bir değerlemeyle fiyatlıyor, profesyonel ilanla doğru alıcı ya da kiracıyla buluşturuyoruz. Türk alıcıların yanı sıra Maslak'ta yaşayan ve yatırım yapan &lt;strong&gt;yabancı müşterilerle&lt;/strong&gt; de çalıştığımız için mülkünüz daha geniş bir kitleye ulaşır. Kiralamada sözleşme, kira takibi ve kiracı yönetimini de üstlenebiliyoruz." data-en="We price your apartment, residence or office in Maslak with a valuation based on current market data, and match it with the right buyer or tenant through professional listings. Because we work with &lt;strong&gt;foreign clients&lt;/strong&gt; living and investing in Maslak as well as Turkish buyers, your property reaches a wider audience. For rentals, we can also handle the contract, rent collection and tenant management.">Maslak'ta dairenizi, residence'ınızı veya ofisinizi güncel piyasa verilerine dayalı bir değerlemeyle fiyatlıyor, profesyonel ilanla doğru alıcı ya da kiracıyla buluşturuyoruz. Türk alıcıların yanı sıra Maslak'ta yaşayan ve yatırım yapan <strong>yabancı müşterilerle</strong> de çalıştığımız için mülkünüz daha geniş bir kitleye ulaşır. Kiralamada sözleşme, kira takibi ve kiracı yönetimini de üstlenebiliyoruz.</p>
+    </section>
+
+    <section class="projects" aria-labelledby="projectsTitle">
+        <h2 id="projectsTitle" data-tr="Çalıştığımız Projeler" data-en="Projects We Work In">Çalıştığımız Projeler</h2>
+        <ul class="project-tags">
+            <li>Ağaoğlu Maslak 1453</li>
+            <li>Skyland</li>
+            <li>Maslak 42</li>
+            <li>Vadi İstanbul</li>
+            <li>Mashattan</li>
+            <li>Ağaoğlu My Home</li>
+            <li>Eclipse</li>
+            <li>Anthill</li>
+            <li>Büyükyalı</li>
+            <li>Yedi Mavi</li>
+            <li>Sinpaş Queen Bomonti</li>
+            <li>Ritz-Carlton Residences</li>
+            <li>Zorlu Center</li>
+            <li>Çiftçi Towers</li>
+            <li>İstanbloom</li>
+            <li>Ulus Arya Evleri</li>
+            <li>Bomonti Rotana Residences</li>
+            <li>Maçka Armani Residences</li>
+            <li>Quasar İstanbul</li>
+            <li>Emaar</li>
+            <li>RAMS Ayazağa</li>
+        </ul>
     </section>
 
     <!-- Gallery -->
@@ -1254,7 +1240,7 @@
             
             function updateLanguage(lang) {
                 // Intro text
-                ['introTitle', 'introText', 'introSign', 'ownerTitle', 'ownerText', 'ownerCta', 'projectsTitle', 'reviewsTitle', 'reviewsSub', 'reviewsAll'].forEach(id => {
+                ['introTitle', 'introText', 'introSign', 'ownerTitle', 'ownerText', 'projectsTitle', 'reviewsTitle', 'reviewsSub', 'reviewsAll'].forEach(id => {
                     const el = document.getElementById(id);
                     if (id === 'introText' || id === 'ownerText') el.innerHTML = el.getAttribute(`data-${lang}`);
                     else el.textContent = el.getAttribute(`data-${lang}`);
