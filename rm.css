@@ -98,7 +98,7 @@ a:hover { color: var(--red-text); }
 
 .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
 .logo {
-    width: 56px; height: 56px; object-fit: contain; display: block;
+    width: auto; height: 56px; aspect-ratio: 288 / 202; object-fit: contain; display: block;
     background: var(--logo-bg); border-radius: 12px; padding: 4px;
 }
 .company-name { display: flex; flex-direction: column; line-height: 1.05; }
@@ -350,7 +350,8 @@ html:not(.dark) footer { background: #0E1A3A; }
     .header-right { width: 100%; margin-left: 0; }
     .action-buttons { width: 100%; }
     .action-buttons > a { flex: 1 1 0; min-width: 0; padding: 0 8px; }
-    .logo { width: 48px; height: 48px; }
+    .logo { width: auto; height: 46px; }
+    .logo-container { gap: 9px; }
     .company-name-main { font-size: 21px; }
     .wrap, .about-container, .services-grid { padding: 0 16px; }
     .hero, .stats { padding-left: 16px; padding-right: 16px; }
@@ -381,7 +382,7 @@ html:not(.dark) footer { background: #0E1A3A; }
 @media (max-width: 400px) {
     .company-name-main { font-size: 18px; }
     .company-name-sub { letter-spacing: .26em; }
-    .logo { width: 44px; height: 44px; }
+    .logo { width: auto; height: 40px; }
     .action-buttons > a { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
