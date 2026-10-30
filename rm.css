@@ -13,6 +13,7 @@
 
 :root {
     --red: #E30613;          /* dolgu: buton, vurgu */
+    --btn-red: #E74C3C;      /* ARA / KONUM (eski sitedeki kırmızı) */
     --red-text: #D0101A;     /* açık zeminde kırmızı yazı */
     --blue: #0A3FB0;         /* dolgu: şerit, buton */
     --blue-text: #0A3FB0;    /* açık zeminde mavi yazı */
@@ -101,7 +102,7 @@ a:hover { color: var(--red-text); }
     background: var(--logo-bg); border-radius: 12px; padding: 4px;
 }
 .company-name { display: flex; flex-direction: column; line-height: 1.05; }
-.company-name-main { font-family: var(--brand-font); font-weight: 700; font-size: 20px; letter-spacing: .02em; white-space: nowrap; }
+.company-name-main { font-family: var(--brand-font); font-weight: 700; font-size: 24px; letter-spacing: .02em; white-space: nowrap; }
 .company-name-main .cn-red { color: var(--red); }
 html.dark .company-name-main .cn-red { color: #FF2A2A; }
 .company-name-main .cn-blue { color: var(--blue-text); }
@@ -130,6 +131,7 @@ html.dark .icon-btn .ico-moon { display: none; }
 
 .action-buttons { display: flex; gap: 10px; }
 .sahibinden-button {
+    font-family: Arial, Helvetica, sans-serif;
     display: inline-flex; align-items: center; justify-content: center;
     background: #FFD301; color: #000; border-radius: 8px;
     padding: 0 14px; height: 44px; font-weight: 700; font-size: 14px; text-decoration: none;
@@ -139,9 +141,9 @@ html.dark .icon-btn .ico-moon { display: none; }
 .sahibinden-button i { font-style: normal; font-weight: 700; font-size: 21px; margin-right: 6px; }
 .action-button {
     display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-    background: var(--red); color: #fff; border-radius: 8px;
+    background: var(--btn-red); color: #fff; border-radius: 8px;
     padding: 0 15px; height: 44px; min-width: 100px; font-weight: 600; font-size: 14px; text-decoration: none;
-    box-shadow: 0 4px 8px rgba(227, 6, 19, .28); transition: transform .2s, background-color .2s;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, .3); transition: transform .2s, background-color .2s;
 }
 .action-button:hover { color: #fff; background: var(--blue); transform: translateY(-2px); }
 .action-button i { font-size: 14px; }
@@ -217,7 +219,7 @@ input:checked + .slider:before { transform: translateX(46px); }
 .section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 32px; }
 
 .intro { display: flex; flex-wrap: wrap; gap: 56px; align-items: center; }
-.intro-photo { flex: 1 1 300px; max-width: 400px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); display: block; }
+.intro-photo { flex: 0 1 300px; width: 300px; max-width: 300px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; border-radius: var(--radius); display: block; }
 .intro-body { flex: 999 1 480px; min-width: 0; }
 .intro-body .lead { font-size: clamp(18px, 1.7vw, 21px); line-height: 1.6; color: var(--text); }
 .intro-body .lead .brand { color: var(--red-text); font-weight: 700; }
@@ -318,7 +320,7 @@ body.lang-en-active .lang-tr { display: none !important; }
 footer { background: #07090D; color: #ECEEF2; margin-top: 24px; }
 html:not(.dark) footer { background: #0E1A3A; }
 .footer-inner { max-width: var(--wrap); margin: 0 auto; padding: 56px 28px 28px; display: flex; flex-wrap: wrap; gap: 32px 48px; justify-content: space-between; }
-.contact-info h3 { font-family: var(--brand-font); font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.contact-info h3 { font-family: var(--brand-font); font-size: 28px; font-weight: 700; margin-bottom: 10px; }
 .contact-info h3 .cn-red { color: #FF2A2A; }
 .contact-info h3 .cn-blue { color: #8FB0FF; }
 .contact-info p { color: #B9C0CC; margin: 6px 0; }
@@ -346,7 +348,7 @@ html:not(.dark) footer { background: #0E1A3A; }
     .action-buttons { width: 100%; }
     .action-buttons > a { flex: 1 1 0; min-width: 0; padding: 0 8px; }
     .logo { width: 48px; height: 48px; }
-    .company-name-main { font-size: 19px; }
+    .company-name-main { font-size: 21px; }
     .wrap, .about-container, .services-grid { padding: 0 16px; }
     .hero, .stats { padding-left: 16px; padding-right: 16px; }
     .hero-box { min-height: 440px; border-radius: 18px; }
@@ -355,7 +357,7 @@ html:not(.dark) footer { background: #0E1A3A; }
     .section { padding: 60px 0; }
     .section-tight { padding: 40px 0; }
     .intro { gap: 28px; }
-    .intro-photo { max-width: 100%; aspect-ratio: 1 / 1; }
+    .intro-photo { flex: 0 0 auto; width: 62%; max-width: 240px; aspect-ratio: 4 / 5; object-position: center top; margin: 0 auto; }
     .photo-strip img { height: 180px; }
     .owners-body { padding: 32px 24px; }
     .owners-photo { min-height: 240px; }
@@ -374,7 +376,7 @@ html:not(.dark) footer { background: #0E1A3A; }
     .footer-inner { padding: 44px 16px 24px; }
 }
 @media (max-width: 400px) {
-    .company-name-main { font-size: 16px; }
+    .company-name-main { font-size: 18px; }
     .company-name-sub { letter-spacing: .26em; }
     .logo { width: 44px; height: 44px; }
     .action-buttons > a { font-size: 13px; }
