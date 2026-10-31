@@ -346,6 +346,13 @@ html:not(.dark) footer { background: #0E1A3A; }
 .contact-info h3 .cn-red { color: #FF2A2A; }
 .contact-info h3 .cn-blue { color: #8FB0FF; }
 .contact-info p { color: #B9C0CC; margin: 6px 0; }
+.footer-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 18px; }
+.footer-brand .logo { height: 52px; }
+.footer-brand .company-name-main { font-size: 24px; }
+.footer-brand .company-name-main .cn-red { color: #FF2A2A; }
+.footer-brand .company-name-main .cn-blue { color: #8FB0FF; }
+.footer-brand .company-name-sub { color: #B9C0CC; }
+@media (max-width: 400px) { .footer-brand .company-name-main { font-size: 19px; } .footer-brand .logo { height: 42px; } }
 .footer-link { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .35); }
 .footer-link:hover { color: #FF4D4D; border-bottom-color: #FF4D4D; }
 .social-links { display: flex; gap: 14px; align-items: flex-start; }
