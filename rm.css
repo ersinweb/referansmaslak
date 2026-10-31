@@ -233,8 +233,15 @@ input:checked + .slider:before { transform: translateX(46px); }
 .photo-strip img { width: 100%; height: 300px; object-fit: cover; border-radius: 16px; display: block; background: var(--surface-2); }
 
 /* Yorumlar */
-.reviews-sub { font-size: 14px; color: var(--muted); }
-.reviews-sub .g-stars { color: #F5A623; letter-spacing: 1px; }
+.g-rating {
+    display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 14px;
+    background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: var(--text);
+    transition: border-color .2s, transform .2s;
+}
+.g-rating:hover { color: var(--text); border-color: #F5A623; transform: translateY(-2px); }
+.g-rating-score { font: 700 26px/1 var(--font); letter-spacing: -.01em; }
+.g-rating-stars { color: #F5A623; font-size: 19px; letter-spacing: 2px; line-height: 1; }
+.g-rating-src { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--muted); padding-left: 10px; border-left: 1px solid var(--line); }
 .reviews-viewport { position: relative; margin: 0 -28px; }
 .reviews-viewport::before, .reviews-viewport::after {
     content: ''; position: absolute; top: 0; bottom: 0; width: 72px; z-index: 2; pointer-events: none;
@@ -410,3 +417,4 @@ html:not(.dark) footer { background: #0E1A3A; }
     .intro-sign .sign-name { display: block; }
     .intro-sign .sign-sep { display: none; }
 }
+.reviews .section-head { align-items: center; }
