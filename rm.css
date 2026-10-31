@@ -67,7 +67,6 @@ a:hover { color: var(--red-text); }
 :focus-visible { outline: 2px solid var(--blue-text); outline-offset: 2px; }
 
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
-.eyebrow { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--red-text); margin-bottom: 14px; }
 .brand-h { font-family: var(--brand-font); font-weight: 700; letter-spacing: .01em; line-height: 1.12; }
 .t-red { color: var(--red-text); }
 .t-blue { color: var(--blue-text); }
@@ -201,7 +200,6 @@ input:checked + .slider:before { transform: translateX(46px); }
 .hero-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 10, 14, 0) 30%, rgba(8, 10, 14, .9) 100%); }
 .hero-text { position: relative; z-index: 1; padding: 0 48px 52px; max-width: 980px; color: #fff; }
-.hero-text .eyebrow { color: #fff; }
 .hero-text h1 { font-family: var(--brand-font); font-weight: 700; font-size: clamp(32px, 5vw, 64px); line-height: 1.14; color: #fff; padding-bottom: 6px; }
 .hero-text h1 .hl { color: #FF3B3B; }
 .hero-text p { margin-top: 16px; font-size: 18px; color: #E6E9EE; max-width: 720px; }
@@ -281,7 +279,6 @@ input:checked + .slider:before { transform: translateX(46px); }
 /* Mülk sahipleri */
 .owners { display: flex; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
 .owners-body { flex: 1 1 440px; min-width: 0; padding: 52px 48px; }
-.owners-body .eyebrow { color: var(--blue-text); }
 .owners h2 { font-family: var(--brand-font); font-weight: 700; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.2; color: var(--text); }
 .owners p { margin-top: 18px; color: var(--muted); }
 .owners p strong { color: var(--text); }
@@ -390,7 +387,6 @@ html:not(.dark) footer { background: #0E1A3A; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 150px; gap: 8px; }
     .stat-num { font-size: 22px; white-space: normal; }
     .stats-box { gap: 20px 16px; }
-    .hero-text .eyebrow { letter-spacing: .14em; }
     .project-tags { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
     .project-tags li { font-size: 15px; gap: 8px; }
     .services-grid { grid-template-columns: 1fr; }
