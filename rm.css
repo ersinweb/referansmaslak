@@ -235,28 +235,41 @@ input:checked + .slider:before { transform: translateX(46px); }
 /* Yorumlar */
 .reviews-sub { font-size: 14px; color: var(--muted); }
 .reviews-sub .g-stars { color: #F5A623; letter-spacing: 1px; }
-.reviews-viewport { position: relative; }
-.reviews-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 4px 2px 10px; list-style: none; scrollbar-width: none; }
+.reviews-viewport { position: relative; margin: 0 -28px; }
+.reviews-viewport::before, .reviews-viewport::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 72px; z-index: 2; pointer-events: none;
+}
+.reviews-viewport::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.reviews-viewport::after { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+.reviews-track {
+    display: flex; gap: 16px; overflow-x: auto; padding: 6px 28px 14px; list-style: none;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
 .reviews-track::-webkit-scrollbar { display: none; }
-.reviews-track .review-card { display: none; }
-.reviews-track:not(.is-picked) .review-card:nth-child(-n+3),
-.reviews-track.is-picked .review-card.is-shown { display: flex; }
+.reviews-track.is-static { scroll-snap-type: x mandatory; }
+.reviews-track.is-static .review-card { scroll-snap-align: start; }
 .review-card {
-    flex: 0 0 calc((100% - 32px) / 3); scroll-snap-align: start;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
-    padding: 28px; flex-direction: column; gap: 16px;
+    position: relative; flex: 0 0 360px; display: flex; flex-direction: column; gap: 14px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-.review-stars { color: #F5A623; letter-spacing: 3px; }
-.review-text { color: var(--text); line-height: 1.65; flex: 1; }
-.review-author { font-size: 14px; font-weight: 600; color: var(--blue-text); }
+.review-card::after { content: '\201D'; position: absolute; top: 6px; right: 20px; font: 700 72px/1 Georgia, serif; color: var(--red-text); opacity: .18; pointer-events: none; }
+.review-card:hover { transform: translateY(-4px); border-color: var(--blue-text); box-shadow: 0 10px 28px rgba(10, 63, 176, .18); }
+.review-stars { color: #F5A623; letter-spacing: 3px; font-size: 17px; }
+.review-text {
+    color: var(--text); line-height: 1.65; flex: 1; font-size: 15.5px;
+    display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden;
+}
+.review-head { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--line); }
+.review-avatar {
+    width: 38px; height: 38px; border-radius: 50%; flex: 0 0 38px; display: inline-flex; align-items: center; justify-content: center;
+    font: 700 16px var(--font); color: #fff; background: var(--blue);
+}
+.review-avatar.av-1 { background: var(--red); }
+.review-avatar.av-2 { background: #0E7C66; }
+.review-avatar.av-3 { background: #7A4BC2; }
+.review-author { font-size: 14.5px; font-weight: 600; color: var(--text); }
 .review-author span { font-weight: 400; color: var(--muted); font-size: 13px; }
-.reviews-nav {
-    position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 22px; line-height: 1; cursor: pointer; box-shadow: var(--shadow);
-}
-.reviews-nav.prev { left: -18px; }
-.reviews-nav.next { right: -18px; }
-.reviews-nav[hidden] { display: none; }
 .reviews-all { display: inline-block; margin-top: 20px; font-size: 15px; font-weight: 600; text-decoration: none; }
 
 /* Mülk sahipleri */
@@ -343,7 +356,6 @@ html:not(.dark) footer { background: #0E1A3A; }
     .stats-box { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 26px 24px; }
     .photo-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .photo-strip img:nth-child(3) { display: none; }
-    .review-card { flex-basis: calc((100% - 16px) / 2); }
 }
 @media (max-width: 760px) {
     .header-content { padding: 10px 16px; gap: 10px; }
@@ -365,8 +377,10 @@ html:not(.dark) footer { background: #0E1A3A; }
     .photo-strip img { height: 180px; }
     .owners-body { padding: 32px 24px; }
     .owners-photo { min-height: 240px; }
-    .review-card { flex-basis: 86%; padding: 22px; }
-    .reviews-nav { display: none; }
+    .review-card { flex-basis: 80vw; max-width: 320px; padding: 22px; }
+    .reviews-viewport { margin: 0 -16px; }
+    .reviews-track { padding-left: 16px; padding-right: 16px; }
+    .reviews-viewport::before, .reviews-viewport::after { width: 28px; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 150px; gap: 8px; }
     .stat-num { font-size: 22px; white-space: normal; }
     .stats-box { gap: 20px 16px; }
