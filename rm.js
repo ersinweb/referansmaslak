@@ -72,7 +72,7 @@
     if (overlay) overlay.addEventListener('click', function () { setMenu(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-    /* ---------- Tema: varsayılan koyu; 'rmTheme' = 'disabled' ise açık ---------- */
+    /* ---------- Tema: varsayılan açık; 'rmTheme' = 'enabled' ise koyu (tercih hatırlanır) ---------- */
     var darkToggle = document.getElementById('darkModeToggle');
     function applyDark(on) {
       html.classList.toggle('dark', on);
@@ -83,7 +83,7 @@
       var tb = document.getElementById('themeBtn');
       if (tb) tb.setAttribute('aria-label', on ? 'Açık temaya geç / Light mode' : 'Koyu temaya geç / Dark mode');
     }
-    applyDark(store('rmTheme') !== 'disabled');
+    applyDark(store('rmTheme') === 'enabled');
     if (darkToggle) darkToggle.addEventListener('change', function () {
       store('rmTheme', this.checked ? 'enabled' : 'disabled');
       applyDark(this.checked);
