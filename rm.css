@@ -285,7 +285,7 @@ input:checked + .slider:before { transform: translateX(46px); }
 .owners h2 { font-family: var(--brand-font); font-weight: 700; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.2; color: var(--text); }
 .owners p { margin-top: 18px; color: var(--muted); }
 .owners p strong { color: var(--text); }
-.owners-photo { flex: 1 1 380px; min-width: 0; height: 440px; object-fit: cover; object-position: center 60%; display: block; background: var(--surface-2); }
+.owners-photo { flex: 1 1 380px; min-width: 0; min-height: 360px; object-fit: cover; display: block; background: var(--surface-2); }
 
 /* Projeler */
 .project-tags { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0 32px; counter-reset: prj; }
@@ -389,7 +389,7 @@ html:not(.dark) footer { background: #0E1A3A; }
     .intro-photo { flex: 0 0 auto; width: 62%; max-width: 240px; aspect-ratio: 4 / 5; object-position: center top; margin: 0 auto; }
     .photo-strip img { height: 180px; }
     .owners-body { padding: 32px 24px; }
-    .owners-photo { height: 300px; }
+    .owners-photo { min-height: 240px; }
     .review-card { flex-basis: 80vw; max-width: 320px; padding: 22px; }
     .reviews-viewport { margin: 0 -16px; }
     .reviews-track { padding-left: 16px; padding-right: 16px; }
