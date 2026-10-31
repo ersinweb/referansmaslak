@@ -168,7 +168,8 @@ html.dark .icon-btn .ico-moon { display: none; }
     display: flex; align-items: center; justify-content: space-between;
     padding: 10px 14px; border-radius: 12px; background: var(--surface-2);
 }
-.language-icon { font-weight: 700; font-size: 18px; color: var(--text); }
+.language-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+.language-icon svg { width: 24px; height: 24px; display: block; }
 .dark-mode-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 18px; }
 .dark-mode-icon .sun-moon { display: none; }
 .dark-mode-icon::before { content: '\263C'; }
