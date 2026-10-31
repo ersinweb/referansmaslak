@@ -139,6 +139,14 @@
       langToggle.dispatchEvent(new Event('change'));
     });
 
+    /* ---------- Sabit listeden rastgele foto: <img data-rm-photo-from="25,10"> ---------- */
+    document.querySelectorAll('img[data-rm-photo-from]').forEach(function (img) {
+      var list = img.getAttribute('data-rm-photo-from').split(',').map(function (s) { return parseInt(s, 10); });
+      var num = list[Math.floor(Math.random() * list.length)];
+      list.forEach(function (x) { used[x] = true; });   // bu fotolar sayfanın başka yerinde tekrar çıkmasın
+      img.src = src(num); img.alt = altText(num);
+    });
+
     /* ---------- Rastgele foto alanları: <div data-rm-photos="3"> ---------- */
     document.querySelectorAll('[data-rm-photos]').forEach(function (box) {
       var n = parseInt(box.getAttribute('data-rm-photos'), 10) || 3;
