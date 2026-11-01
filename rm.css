@@ -226,7 +226,8 @@ input:checked + .slider:before { transform: translateX(46px); }
 .intro-photo { flex: 0 1 300px; width: 300px; max-width: 300px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; border-radius: var(--radius); display: block; }
 .intro-body { flex: 999 1 480px; min-width: 0; }
 .intro-body .lead { font-size: clamp(18px, 1.7vw, 21px); line-height: 1.6; color: var(--text); }
-.intro-body .lead .brand { color: var(--red-text); font-weight: 700; }
+.intro-body .lead .nowrap { white-space: nowrap; }
+.intro-body .lead .lead-break { display: block; margin-top: 14px; }
 .intro-sign { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--blue-text); font-weight: 600; font-size: 15px; }
 
 /* Rastgele foto şeridi */
@@ -416,12 +417,9 @@ html:not(.dark) footer { background: #0E1A3A; }
     *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
 }
 
-.intro-body .br-desk { display: none; }
 /* Ekranda görünmez, Google ve ekran okuyucular için kalır */
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-/* Mobilde imzada unvan ad-soyadın altına iner */
-@media (max-width: 760px) {
-    .intro-sign .sign-name { display: block; }
-    .intro-sign .sign-sep { display: none; }
-}
+/* İmza: ad soyad, altında unvan */
+.intro-sign .sign-name, .intro-sign .sign-title { display: block; }
+.intro-sign .sign-title { margin-top: 4px; }
 .reviews .section-head { align-items: center; }
